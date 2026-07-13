@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Members Portal: Log Volunteer Hours | Honors Learning Academy</title>
+  <meta name="description" content="HLA members portal. Log your tutoring hours through a quick guided flow and watch your verified volunteer total build." />
+  <script>document.documentElement.classList.add('js');addEventListener('DOMContentLoaded',function(){setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in')})},2400)})</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-nav></div>
+
+  <main id="main">
+
+    <section class="page-hero wrap" style="padding-bottom:1rem">
+      <span class="eyebrow reveal">Members portal</span>
+      <h1 class="reveal" data-delay="1">Log your hours in under a minute.</h1>
+      <p class="lede reveal" data-delay="2">No login, no spreadsheet. Just tell the assistant your name, your hours, and the subject. Your running total updates on the spot.</p>
+    </section>
+
+    <section class="section" style="padding-top:1.5rem">
+      <div class="wrap">
+        <div class="portal__grid">
+
+          <!-- Logger -->
+          <div class="chat reveal">
+            <div class="chat__head">
+              <div class="chat__avatar" data-ic="book"></div>
+              <div>
+                <h3>HLA hours assistant</h3>
+                <span class="status">Online</span>
+              </div>
+            </div>
+            <div class="chat__log" id="chatLog" aria-live="polite"></div>
+            <div class="chat__quick" id="chatQuick"></div>
+            <div class="chat__input">
+              <input id="chatInput" type="text" autocomplete="off" placeholder="Type here…" aria-label="Your message" />
+              <button class="chat__send" id="chatSend" aria-label="Send"><span data-ic="arrow"></span></button>
+            </div>
+          </div>
+
+          <!-- Dashboard -->
+          <div class="dash">
+            <div class="dash__total reveal" data-delay="1">
+              <span class="eyebrow no-rule">Your volunteer hours</span>
+              <div class="dash__big tabular" id="dashTotal">0<span>hrs</span></div>
+              <div class="dash__sub" id="dashSub">Log a session to see your total</div>
+            </div>
+            <div class="dash__sessions reveal" data-delay="2">
+              <h4>Recent sessions</h4>
+              <div id="dashSessions">
+                <div class="dash__empty">No sessions yet. Your logged hours will appear here.</div>
+              </div>
+            </div>
+            <div class="card reveal" data-delay="3" style="background:var(--green-soft);border-color:transparent">
+              <div style="display:flex;gap:.7rem;align-items:flex-start">
+                <span style="color:var(--green);flex:none" data-ic="shield"></span>
+                <p style="font-size:var(--t-sm);color:var(--green);margin:0">Hours are recorded with a date and become official volunteer hours once HLA's 501(c)(3) status is granted. Keep them honest, they're on the record.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/portal.js"></script>
+</body>
+</html>

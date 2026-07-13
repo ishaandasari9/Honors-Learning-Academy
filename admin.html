@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin | Honors Learning Academy</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <script>document.documentElement.classList.add('js');addEventListener('DOMContentLoaded',function(){setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in')})},2400)})</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div data-nav></div>
+
+  <main id="main" class="wrap section">
+
+    <!-- LOCK -->
+    <div class="admin-lock" id="adminLock">
+      <div class="form-card">
+        <div class="form-head">
+          <span class="eyebrow no-rule">Admin</span>
+          <h3 style="margin-top:.75rem">Enter your admin key</h3>
+          <p>This area lets you edit the site's content. Only you should have the key.</p>
+        </div>
+        <div class="field">
+          <label for="adminKey">Admin key</label>
+          <input id="adminKey" type="password" autocomplete="off" placeholder="••••••" />
+          <span class="error" id="adminKeyErr" style="display:none">That key didn't match. Try again.</span>
+        </div>
+        <button class="btn btn--primary btn--lg btn--block" id="adminEnter">Unlock <span data-ic="arrow"></span></button>
+      </div>
+    </div>
+
+    <!-- SHELL -->
+    <div class="admin-shell" id="adminShell">
+      <div class="admin-bar">
+        <div>
+          <span class="eyebrow no-rule">Control room</span>
+          <h2 style="margin-top:.4rem;font-size:var(--t-2xl)">Edit your site</h2>
+        </div>
+        <span class="status-chip" id="backendChip">Checking…</span>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="content">Content</button>
+        <button class="admin-tab" data-tab="text">Website text</button>
+        <button class="admin-tab" data-tab="stats">Quick facts</button>
+        <button class="admin-tab" data-tab="contact">Contact &amp; social</button>
+        <button class="admin-tab" data-tab="submissions">Submissions</button>
+        <button class="admin-tab" data-tab="hours">Hours log</button>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="admin-panel active" id="panel-content">
+        <div class="admin-section">
+          <h3>Organization</h3>
+          <p class="desc">The name shown across the site.</p>
+          <div class="field"><label for="f-org">Organization name</label><input id="f-org" type="text" /></div>
+        </div>
+        <div class="admin-section">
+          <h3>Mission</h3>
+          <p class="desc">The paragraph in the "Who we are" section on the home page.</p>
+          <div class="field"><label for="f-mission">Mission text</label><textarea id="f-mission" style="min-height:140px"></textarea></div>
+          <div class="field"><label for="f-founders">Founders line</label><input id="f-founders" type="text" placeholder="e.g. Founded by Ishaan & Priya, students at Marvin Ridge HS" /><span class="hint">Adding real first names and a school here noticeably builds trust with parents.</span></div>
+        </div>
+        <div class="admin-section">
+          <h3>Announcement bar</h3>
+          <p class="desc">A thin banner across the very top of every page. Turn it on for events, deadlines, or news.</p>
+          <div class="toggle-row">
+            <div><strong style="color:var(--ink)">Show the banner</strong><div class="desc" style="margin:0">When off, no banner appears.</div></div>
+            <label class="switch"><input type="checkbox" id="f-announce-on" /><span class="track"></span></label>
+          </div>
+          <div class="field" style="margin-top:1rem"><label for="f-announce-text">Banner text</label><input id="f-announce-text" type="text" placeholder="e.g. Fall sign-ups are open. Request a tutor today." /></div>
+        </div>
+      </div>
+
+      <!-- WEBSITE TEXT -->
+      <div class="admin-panel" id="panel-text">
+        <div class="admin-section" style="background:var(--gold-soft);border-color:transparent">
+          <h3>Edit any text on the site</h3>
+          <p class="desc" style="margin-bottom:0">Every heading, paragraph, and label from each page is listed below, grouped by page. Change the wording and hit Save. Tip: wrap a word in *asterisks* to give it the gold italic accent, like the word <span class="serif-accent">just</span> in the homepage headline.</p>
+        </div>
+        <div id="textEditor"><div class="data-empty">Open this tab to load the site's text.</div></div>
+      </div>
+
+      <!-- STATS -->
+      <div class="admin-panel" id="panel-stats">
+        <div class="admin-section">
+          <h3>Quick facts</h3>
+          <p class="desc">The four facts the site can surface. Keep them honest. Leave a note blank to hide it.</p>
+          <div id="statsEditor"></div>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="admin-panel" id="panel-contact">
+        <div class="admin-section">
+          <h3>Contact</h3>
+          <p class="desc">Shown in the footer and the email links.</p>
+          <div class="form-grid">
+            <div class="field"><label for="f-email">Contact email</label><input id="f-email" type="email" /></div>
+            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" type="tel" /><span class="hint">Optional. A Google Voice line is fine. Leave blank to hide it everywhere.</span></div>
+            <div class="field span-2"><label for="f-location">Location</label><input id="f-location" type="text" /></div>
+          </div>
+        </div>
+        <div class="admin-section">
+          <h3>Social links</h3>
+          <p class="desc">Paste a link to make its icon appear in the footer. Leave blank to hide it. You don't need to type https://.</p>
+          <div class="form-grid">
+            <div class="field"><label for="f-soc-instagram">Instagram</label><input id="f-soc-instagram" type="text" placeholder="instagram.com/yourhandle" /></div>
+            <div class="field"><label for="f-soc-tiktok">TikTok</label><input id="f-soc-tiktok" type="text" placeholder="tiktok.com/@yourhandle" /></div>
+            <div class="field"><label for="f-soc-youtube">YouTube</label><input id="f-soc-youtube" type="text" placeholder="youtube.com/@yourchannel" /></div>
+            <div class="field"><label for="f-soc-x">X</label><input id="f-soc-x" type="text" placeholder="x.com/yourhandle" /></div>
+            <div class="field span-2"><label for="f-soc-linkedin">LinkedIn</label><input id="f-soc-linkedin" type="text" placeholder="linkedin.com/company/hla" /></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMISSIONS -->
+      <div class="admin-panel" id="panel-submissions">
+        <div class="admin-section">
+          <h3>Form submissions</h3>
+          <p class="desc">Tutoring requests and tutor applications, newest first.</p>
+          <div id="submissionsTable"><div class="data-empty">Open this tab to load.</div></div>
+        </div>
+      </div>
+
+      <!-- HOURS -->
+      <div class="admin-panel" id="panel-hours">
+        <div class="admin-section">
+          <h3>Volunteer hours</h3>
+          <p class="desc">Every session members have logged.</p>
+          <div id="hoursTable"><div class="data-empty">Open this tab to load.</div></div>
+        </div>
+      </div>
+
+      <div class="admin-save-bar">
+        <span class="saved-flash" id="savedFlash">Saved</span>
+        <button class="btn btn--primary" data-save>Save changes</button>
+      </div>
+    </div>
+
+  </main>
+
+  <div data-footer></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
