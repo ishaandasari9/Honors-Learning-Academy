@@ -133,3 +133,14 @@
   .form-grid { grid-template-columns: 1fr; }
   .portal__grid { grid-template-columns: 1fr; }
 }
+
+/* Send failure: shown only when a submission did not reach the backend. */
+.send-error {
+  margin-top: 1rem;
+  font-size: var(--t-sm);
+  color: oklch(50% 0.18 25);
+  background: oklch(96% 0.03 25);
+  border: 1px solid oklch(88% 0.06 25);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+}

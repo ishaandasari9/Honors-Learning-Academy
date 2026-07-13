@@ -99,15 +99,44 @@
       const data = gather(form);
       // With no cloud backend, deliver the lead by email while we still have the click gesture.
       if (window.HLA.store.backend === "local") emailFallback(kind, data);
+
+      let sent = true;
       try {
         await window.HLA.store.submit(kind, data);
       } catch (err) {
-        // store falls back to local; only a hard failure lands here
-        console.warn("submit issue", err);
+        sent = false;
+        console.warn("submit failed", err);
+        // Never lose the lead. Keep a local copy so it is recoverable.
+        try {
+          const q = JSON.parse(localStorage.getItem("hla_submissions") || "[]");
+          q.push(Object.assign({ kind, created_at: new Date().toISOString() }, data));
+          localStorage.setItem("hla_submissions", JSON.stringify(q));
+        } catch (e2) { /* storage full or blocked; nothing more we can do here */ }
       }
 
       submitBtn.disabled = false;
       submitBtn.innerHTML = original;
+
+      // A request that did not send must never show a success screen.
+      if (!sent) {
+        const c = window.HLA.store.content();
+        const to = (c.contact && c.contact.email) || "";
+        const foot = form.querySelector(".form-foot");
+        let err = form.querySelector("[data-send-error]");
+        if (!err && foot) {
+          err = document.createElement("p");
+          err.setAttribute("data-send-error", "");
+          err.className = "send-error";
+          foot.appendChild(err);
+        }
+        if (err) {
+          err.innerHTML = 'That did not send. Please email us at '
+            + '<a class="link-gold" href="mailto:' + to + '">' + to + '</a>'
+            + ' and we will pick it up from there.';
+          err.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        return;
+      }
 
       if (success) {
         form.style.display = "none";
