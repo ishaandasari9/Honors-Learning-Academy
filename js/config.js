@@ -8,8 +8,8 @@
    Fill these in to make admin edits + form/hours data global.
    See README.md for the one-time Supabase setup. ---- */
 window.HLA_SUPABASE = {
-  url: "",        // e.g. https://xxxx.supabase.co
-  anonKey: ""     // the anon / public key
+  url: "https://cmtdhbxrehvmgvnhohdp.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtdGRoYnhyZWh2bWd2bmhvaGRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5Njg0MzIsImV4cCI6MjA5OTU0NDQzMn0.bslcPJwCAJ_7LnYGAopD-3esAWMo6tjLMWyFxVvnBp4"
 };
 
 /* ---- Editable content (defaults). Admin overrides are merged on top. ---- */
