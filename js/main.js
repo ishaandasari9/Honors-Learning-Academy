@@ -24,13 +24,13 @@
 
   /* ---------- Supabase REST helper ---------- */
   async function sb(path, opts = {}) {
-    const res = await fetch(SB.url + "/rest/v1/" + path, Object.assign({
+    const res = await fetch(SB.url + "/rest/v1/" + path, Object.assign({}, opts, {
       headers: Object.assign({
         "apikey": SB.anonKey,
         "Authorization": "Bearer " + SB.anonKey,
         "Content-Type": "application/json"
       }, opts.headers || {})
-    }, opts));
+    }));
     if (!res.ok) throw new Error("Supabase " + res.status);
     const txt = await res.text();
     return txt ? JSON.parse(txt) : null;
