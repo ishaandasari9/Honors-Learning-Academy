@@ -23,11 +23,35 @@
   }
 
   /* ---------- Supabase REST helper ---------- */
+  /* An admin who has signed in gets a session token. Everyone else rides on
+     the public anon key. RLS decides what each of them is allowed to do. */
+  const TOKEN_KEY = "hla_sb_token";
+  function authToken() {
+    try { return sessionStorage.getItem(TOKEN_KEY) || ""; } catch (e) { return ""; }
+  }
+
+  const auth = {
+    signedIn() { return !!authToken(); },
+    signOut() { try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {} },
+    async signIn(email, password) {
+      const res = await fetch(SB.url + "/auth/v1/token?grant_type=password", {
+        method: "POST",
+        headers: { "apikey": SB.anonKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, password: password })
+      });
+      if (!res.ok) throw new Error("Sign in failed " + res.status);
+      const j = await res.json();
+      if (!j.access_token) throw new Error("Sign in failed");
+      sessionStorage.setItem(TOKEN_KEY, j.access_token);
+      return true;
+    }
+  };
+
   async function sb(path, opts = {}) {
     const res = await fetch(SB.url + "/rest/v1/" + path, Object.assign({}, opts, {
       headers: Object.assign({
         "apikey": SB.anonKey,
-        "Authorization": "Bearer " + SB.anonKey,
+        "Authorization": "Bearer " + (authToken() || SB.anonKey),
         "Content-Type": "application/json"
       }, opts.headers || {})
     }));
@@ -410,7 +434,7 @@
   }
 
   window.HLA = {
-    store, ICONS, LOGO, CREST, socialRow, reObserveReveals, applyContent, SOCIAL_LABELS,
+    store, auth, ICONS, LOGO, CREST, socialRow, reObserveReveals, applyContent, SOCIAL_LABELS,
     cms: { editTargets, domPath, htmlToEdit, editToHtml }
   };
 

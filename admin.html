@@ -23,15 +23,19 @@
       <div class="form-card">
         <div class="form-head">
           <span class="eyebrow no-rule">Admin</span>
-          <h3 style="margin-top:.75rem">Enter your admin key</h3>
-          <p>This area lets you edit the site's content. Only you should have the key.</p>
+          <h3 style="margin-top:.75rem">Sign in</h3>
+          <p>This area lets you edit the site's content. Use the account created for you in Supabase.</p>
         </div>
         <div class="field">
-          <label for="adminKey">Admin key</label>
-          <input id="adminKey" type="password" autocomplete="off" placeholder="••••••" />
-          <span class="error" id="adminKeyErr" style="display:none">That key didn't match. Try again.</span>
+          <label for="adminEmail">Email</label>
+          <input id="adminEmail" type="email" autocomplete="username" placeholder="you@email.com" />
         </div>
-        <button class="btn btn--primary btn--lg btn--block" id="adminEnter">Unlock <span data-ic="arrow"></span></button>
+        <div class="field">
+          <label for="adminPass">Password</label>
+          <input id="adminPass" type="password" autocomplete="current-password" placeholder="••••••••" />
+          <span class="error" id="adminKeyErr" style="display:none">That didn't work. Check the email and password.</span>
+        </div>
+        <button class="btn btn--primary btn--lg btn--block" id="adminEnter">Sign in <span data-ic="arrow"></span></button>
       </div>
     </div>
 

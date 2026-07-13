@@ -7,29 +7,47 @@
 (function () {
   "use strict";
 
-  /* >>> CHANGE THIS to your own admin key <<< */
-  const ADMIN_KEY = "amv#09";
+  /* Real auth. The gate is Supabase, not a string in this file: a secret
+     shipped to the browser is not a secret. RLS on site_content only lets a
+     signed-in user write, so an unauthenticated visitor can read the site
+     but cannot change a word of it. */
 
   const lock = document.getElementById("adminLock");
   const shell = document.getElementById("adminShell");
-  const keyInput = document.getElementById("adminKey");
+  const emailInput = document.getElementById("adminEmail");
+  const passInput = document.getElementById("adminPass");
   const keyBtn = document.getElementById("adminEnter");
   const keyErr = document.getElementById("adminKeyErr");
 
   function unlock() {
     lock.style.display = "none";
     shell.classList.add("show");
-    sessionStorage.setItem("hla_admin", "1");
     populate();
   }
 
-  if (sessionStorage.getItem("hla_admin") === "1") unlock();
+  if (window.HLA.auth.signedIn()) unlock();
 
-  keyBtn.addEventListener("click", tryKey);
-  keyInput.addEventListener("keydown", (e) => { if (e.key === "Enter") tryKey(); });
-  function tryKey() {
-    if (keyInput.value === ADMIN_KEY) { keyErr.style.display = "none"; unlock(); }
-    else { keyErr.style.display = "block"; keyInput.select(); }
+  keyBtn.addEventListener("click", signIn);
+  [emailInput, passInput].forEach(el => {
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") signIn(); });
+  });
+
+  async function signIn() {
+    const original = keyBtn.innerHTML;
+    keyBtn.disabled = true;
+    keyBtn.innerHTML = "Signing in\u2026";
+    try {
+      await window.HLA.auth.signIn(emailInput.value.trim(), passInput.value);
+      keyErr.style.display = "none";
+      passInput.value = "";
+      unlock();
+    } catch (e) {
+      keyErr.style.display = "block";
+      passInput.value = "";
+      passInput.focus();
+    }
+    keyBtn.disabled = false;
+    keyBtn.innerHTML = original;
   }
 
   /* ---- tabs ---- */
@@ -187,7 +205,13 @@
       flash.textContent = window.HLA.store.backend === "supabase" ? "Saved to the cloud" : "Saved to this browser";
       flash.classList.add("show");
     } catch (e) {
-      flash.textContent = "Cloud save failed; kept a local copy";
+      const msg = String(e);
+      if (msg.indexOf("401") > -1 || msg.indexOf("403") > -1) {
+        window.HLA.auth.signOut();
+        flash.textContent = "Session expired. Reload and sign in again.";
+      } else {
+        flash.textContent = "Cloud save failed; kept a local copy";
+      }
       flash.classList.add("show");
     }
     setTimeout(() => flash.classList.remove("show"), 2600);
