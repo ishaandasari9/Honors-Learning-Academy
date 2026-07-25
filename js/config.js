@@ -60,13 +60,13 @@ window.HLA_DEFAULTS = {
    }
 */
 window.HLA_TEAM = [
-  { name: "Ishaan Dasari",    role: "Co-Founder",              bio: "", photo: "" },
-  { name: "Aksshat Shrikant", role: "Co-Founder",              bio: "", photo: "" },
-  { name: "Sohan Narala",     role: "Operations & Logistics",  bio: "", photo: "" },
-  { name: "Shaurya Gautum",   role: "Operations & Logistics",  bio: "", photo: "" },
-  { name: "Pranit Pradhan",   role: "Outreach & Social Media", bio: "", photo: "" },
-  { name: "Akhil Chavali",    role: "Curriculum",              bio: "", photo: "" },
-  { name: "Anish Premnath",   role: "Technology & Web",        bio: "", photo: "" }
+  { name: "Ishaan Dasari",    role: "Co-Founder",              bio: "Co-started HLA. Handles school partnerships, outreach, and where the program goes next.", photo: "" },
+  { name: "Aksshat Shrikant", role: "Co-Founder",              bio: "Co-started HLA. Oversees tutor recruiting and the day to day of matching students.", photo: "" },
+  { name: "Sohan Narala",     role: "Operations & Logistics",  bio: "Keeps scheduling straight, from session times to making sure nobody is double booked.", photo: "" },
+  { name: "Shaurya Gautum",   role: "Operations & Logistics",  bio: "Runs tutor onboarding and checks that every session makes it into the portal.", photo: "" },
+  { name: "Pranit Pradhan",   role: "Outreach & Social Media", bio: "Gets the word out to families around Waxhaw and Marvin, and runs our accounts.", photo: "" },
+  { name: "Akhil Chavali",    role: "Curriculum",              bio: "Builds the subject guides tutors work from, so a session starts with a plan.", photo: "" },
+  { name: "Anish Premnath",   role: "Technology & Web",        bio: "Maintains the site, the hours portal, and the admin tools behind them.", photo: "" }
 ];
 
 /* ---- Shared SVG ---- */
