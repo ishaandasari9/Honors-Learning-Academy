@@ -13,7 +13,7 @@
   --surface:    oklch(99.2% 0.005 84);
   --ink:        oklch(28%   0.045 256);
   --ink-soft:   oklch(43%   0.030 256);
-  --muted:      oklch(50%   0.022 256);
+  --muted:      oklch(46%   0.022 256);
   --gold:       oklch(62%   0.100 78);
   --gold-deep:  oklch(54%   0.100 70);
   --gold-ink:   oklch(52%   0.095 78); /* #8A6420, text only; clears 4.5:1 on paper */

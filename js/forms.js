@@ -25,7 +25,7 @@
       if (input.required && !input.value.trim()) ok = false;
       else if (input.type === "email" && input.value && !emailRe.test(input.value.trim())) ok = false;
     }
-    field.classList.toggle("invalid", !ok);
+    field.classList.toggle("invalid", !ok); field.querySelectorAll("input, select, textarea").forEach(function (el) { el.setAttribute("aria-invalid", ok ? "false" : "true"); });
     return ok;
   }
 
@@ -65,7 +65,7 @@
     const success = card ? card.querySelector("[data-success]") : null;
     const submitBtn = form.querySelector('[type="submit"]');
 
-    // inline validation on blur
+    form.querySelectorAll(".field").forEach(function (f, i) { var inp = f.querySelector("input, select, textarea"); var er = f.querySelector(".error"); if (!inp || !er) return; if (!er.id) er.id = (kind || "form") + "-err-" + i; inp.setAttribute("aria-describedby", er.id); }); var live = document.createElement("p"); live.setAttribute("aria-live", "polite"); live.className = "visually-hidden"; form.appendChild(live); function announce(m) { live.textContent = ""; setTimeout(function () { live.textContent = m; }, 60); }
     form.querySelectorAll("input, select, textarea").forEach(el => {
       el.addEventListener("blur", () => { if (fieldOf(el)) validateField(fieldOf(el)); });
       el.addEventListener("input", () => {
@@ -83,7 +83,7 @@
         if (!ok && !firstBad) firstBad = f;
         allOk = allOk && ok;
       });
-      if (!allOk) {
+      if (!allOk) { announce("Some fields need attention.");
         if (firstBad) {
           const inp = firstBad.querySelector("input, select, textarea");
           if (inp) inp.focus();
@@ -126,7 +126,7 @@
         if (!err && foot) {
           err = document.createElement("p");
           err.setAttribute("data-send-error", "");
-          err.className = "send-error";
+          err.setAttribute("role", "alert"); err.className = "send-error";
           foot.appendChild(err);
         }
         if (err) {
@@ -140,7 +140,7 @@
 
       if (success) {
         form.style.display = "none";
-        success.classList.add("show");
+        success.classList.add("show"); if (!success.hasAttribute("tabindex")) success.setAttribute("tabindex", "-1"); success.focus({ preventScroll: true });
         success.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
