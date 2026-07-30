@@ -6,26 +6,36 @@ Premium editorial, light. Institutional warmth a parent trusts; editorial confid
 Light. Scene that forces it: *a parent at the kitchen table on a laptop in the evening deciding whether to trust teenagers with their child's education, and a high-schooler glancing at it on their phone between classes.* Light + warm reads honest and safe; dark reads techy and uncertain. Light wins.
 
 ## Color strategy
-**Committed** — a warm paper surface carries the identity; deep navy ink gives institutional gravity; a single refined gold is the accent; a deep scholarly green is the secondary signal color. No glass, no neon, no gradients-as-decoration.
+**Committed, navy + gold on off-white** — a warm off-white paper surface is the canvas; **navy** (`--ink`, the same blue as the hero headline) is the box color: every filled card/box is navy — the "at a glance" cards, both audience doors, the Core-subjects pill, the portal note card — plus `--ink-invert` for the footer/dashboard, giving one consistent dark-blue surface. `--blue-soft` remains only as the light tint of the "careful with your kid" band, with `--blue` for that band's accents. **Gold** is the single action color, filling every button (nav CTA, hero, doors, forms, chat send) and appearing as splashes (3px top-accents, badges, door "logo" icons, the AP row, decorative shapes); a deep scholarly green survives only as a minor "verified" signal (form success, live status dot). The navy was lightened and shifted bluer (hue ~260) so it reads as blue, not near-black. Text on navy boxes is white / `--on-blue` (8–13:1) with gold accents; text on the light-blue band is navy `--ink`.
 
 OKLCH tokens (chroma kept low near the extremes):
 
-| Role | Hex (ref) | OKLCH | Use |
-|---|---|---|---|
-| `--paper` | #FBF8F2 | oklch(97.6% 0.011 84) | page background, warm ivory |
-| `--paper-2` | #F4EEE3 | oklch(94.3% 0.016 83) | alternating section, sand |
-| `--surface` | #FFFFFF→warm | oklch(99.2% 0.005 84) | cards/raised, barely warm |
-| `--ink` | #16243C | oklch(28% 0.045 256) | deep navy, headings + brand |
-| `--ink-soft` | #3A4658 | oklch(43% 0.03 256) | body text |
-| `--muted` | #6B7280→warm | oklch(56% 0.02 256) | secondary text, captions |
-| `--gold` | #B0822F | oklch(62% 0.10 78) | accent, links, key marks |
-| `--gold-soft` | #E8D9B5 | oklch(89% 0.05 86) | gold tint backgrounds |
-| `--green` | #1F4D3A | oklch(40% 0.07 162) | secondary signal, "verified/free" |
-| `--green-soft` | #DCE8E0 | oklch(91% 0.025 163) | green tint backgrounds |
-| `--line` | #E6DECF | oklch(89% 0.014 84) | hairline borders |
-| `--ink-invert` | #0E1A2C | oklch(22% 0.04 256) | the one dark section (impact), if used |
+| Role | OKLCH | Use |
+|---|---|---|
+| `--paper` | oklch(97.6% 0.011 84) | page background, warm ivory (dominant canvas) |
+| `--paper-2` | oklch(94.3% 0.016 83) | alternating section, sand |
+| `--surface` | oklch(99.2% 0.005 84) | cards/raised, barely warm |
+| `--ink` | oklch(29% 0.075 260) | deep navy blue: headings, brand, structure (13:1 on paper) |
+| `--ink-soft` | oklch(43% 0.050 260) | body text |
+| `--muted` | oklch(47% 0.030 260) | secondary text, captions |
+| `--gold` | oklch(64% 0.135 80) | high-visibility accent: marks, dots, underlines, hover (3.2:1 on paper) |
+| `--gold-bright` | oklch(74% 0.150 84) | small eye-catch highlights on navy/blue (~7.1:1 on ink-invert) |
+| `--gold-deep` | oklch(54% 0.125 72) | gold CTA fill + door "logo" icons + 3px top-accents (near-white text = 5.0:1) |
+| `--gold-ink` | oklch(52% 0.098 78) | gold *text* on paper only; holds 4.5:1 (5.2:1) |
+| `--gold-soft` | oklch(90% 0.058 86) | gold tint backgrounds |
+| `--gold-line` | oklch(76% 0.110 84) | gold hairline / accent borders (decorative reinforcement only) |
+| `--blue` | oklch(44% 0.140 260) | medium-blue accent for the light band only (eyebrow, checks, link) |
+| `--blue-soft` | oklch(93% 0.028 255) | the one light-blue tint band ("careful with your kid"); ink text = 12:1 |
+| `--on-blue` | oklch(93% 0.020 250) | light text on navy boxes (labels 8.3:1 at 0.82 opacity on --ink) |
+| `--green` | oklch(40% 0.075 162) | minor "verified" signal only (success, status dot, one pill) |
+| `--green-soft` | oklch(91% 0.028 163) | green tint (success icon, admin chip) |
+| `--line` | oklch(89% 0.014 84) | hairline borders |
+| `--ink-invert` | oklch(24% 0.070 260) | dark navy-blue bands (footer, dashboard); lightened from near-black |
 
-Never `#000`/`#fff`. Gold is muted (not bright "trophy" gold). Green is deep forest, not mint.
+Never `#000`/`#fff`. Gold is a refined, vivid accent (warm brass, not neon and not a dull tan): used as splashes on high-priority elements — the tutor CTA, the door "logo" icons, 3px top-accent bars, the active-nav underline, open states, the AP feature row — never as body text (use `--gold-ink` for that). On blue-filled surfaces, text is white/`--on-blue` with gold used for the badge/icon/border splash (gold as *small* text can't clear 4.5:1 on this blue). Green is deep forest, not mint, and now minimal.
+
+## Decorative accents
+Bold navy + gold "splashes" sit behind content on **every off-white section** — the hero, inner-page heroes, closing CTA, the sand bands, and the plain content sections (`.section:not(.band-sand):not(.band-blue):not(.cta-band)`) — via layered `radial-gradient` shapes on one `::before` per section: a gold blob, a small navy soft-blob, a crisp navy ring, and solid dots. Decorative, `pointer-events:none`, behind a raised-content layer (`isolation:isolate` + `z-index`). Contrast rule that keeps them safe: **navy soft-blobs stay ≤0.13 opacity** (muted caption text fails at 0.22 over navy), so navy reads boldly through the crisp **rings and dots** (thin/small, in margins), while **gold blobs may go to ~0.24** (body text still ≥6:1). A deliberate, client-directed exception to the general "no gradients-as-decoration" rule. The dark filled bands (navy boxes, the light-blue trust band) stay shape-free so they don't get busy.
 
 ## Typography
 - **Display / headings:** **Fraunces** (variable, soft optical serifs, high opsz). Weights 400–600, opsz high on large sizes for that editorial, almost literary feel. Tight-ish leading (1.02–1.08) on big headings.
@@ -51,7 +61,9 @@ CSS imports:
 - `prefers-reduced-motion`: all of it collapses to instant/opacity-only. Mandatory.
 
 ## Components
-- **Buttons:** primary = navy ink fill, paper text, subtle lift on hover; secondary = ink outline on paper; tertiary = gold animated-underline link. 44px+ targets.
+- **Buttons:** primary = **gold fill** (`--gold-deep`) with near-white text (5.0:1), subtle lift on hover; secondary = ink outline on paper (ghost); tertiary = animated-underline link. Gold is the single action color (nav CTA, hero, doors, forms, chat send). 44px+ targets. Blue/navy are surfaces/structure/text, never button fills. Interaction accents: the inline arrow slides `translateX(4px)` on hover; primary CTA clusters (`.hero__btns`, `.cta-band .cluster`) sit on a soft blurred blue+gold "contextual" blob (`::before`, behind content).
+- **Links:** `.link-gold` = gold text, gold underline growing from the left. `.link-blue` (secondary link beside a gold button) = navy text, **blue underline growing from the center** on hover, with a sliding inline arrow.
+- **Boxed step grids:** the "how it works" steps sit in light `--surface` boxes with a **crisp 1.5px outline alternating gold / blue** (`:nth-child(even)`), lifting on hover, to anchor otherwise-bare white space.
 - **Forms:** visible labels, helper text, inline validation on blur, error below field, success state on submit, semantic input types. Generous spacing.
 - **Nav:** sticky, paper with hairline bottom border on scroll; clear active state; "Get a tutor" as the one primary CTA in the bar. Mobile: clean slide-down sheet.
 - **Hours portal:** guided conversational logger (no LLM needed — a friendly step flow) + a dashboard with running total in tabular Fraunces.

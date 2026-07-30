@@ -3,7 +3,7 @@
 **Register:** brand (the website *is* the product — marketing, trust, and conversion drive every decision)
 
 ## What it is
-Honors Learning Academy (HLA) is a student-founded nonprofit in Waxhaw / Marvin, North Carolina that provides **free** charitable tutoring to K–12 students. Tutoring is peer-led: high-achieving high-school and college students tutor younger students, both online and in person. HLA is pursuing 501(c)(3) status.
+Honors Learning Academy (HLA) is a student-founded nonprofit in Waxhaw, North Carolina that provides **free** charitable tutoring to K–12 students. Tutoring is peer-led: high-achieving high-school and college students tutor younger students, both online and in person. HLA is pursuing 501(c)(3) status.
 
 Beyond core school subjects (math, science, English, social studies), HLA offers **specialized tracks** most peer tutoring never touches: computer science, business, pre-med, and pre-law (e.g. public speaking, legal literacy). This breadth is the organization's real differentiator.
 

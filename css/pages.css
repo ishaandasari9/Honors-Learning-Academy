@@ -46,18 +46,24 @@
 .faq summary .ic::before, .faq summary .ic::after { content: ""; position: absolute; background: var(--ink); }
 .faq summary .ic::before { width: 11px; height: 1.7px; } .faq summary .ic::after { width: 1.7px; height: 11px; transition: transform .3s var(--ease); }
 .faq details[open] summary .ic::after { transform: scaleY(0); }
-.faq details[open] summary .ic { background: var(--paper-2); }
+.faq details[open] summary .ic { background: var(--gold-soft); border-color: var(--gold); }
+.faq details[open] summary .ic::before { background: var(--gold-ink); }
 .faq .faq__body { padding-bottom: 1.3rem; color: var(--ink-soft); max-width: 68ch; }
 @media (prefers-reduced-motion: reduce) { .faq summary .ic, .faq summary .ic::after { transition: none; } }
 
 /* ============================================================
    Members Portal
    ============================================================ */
+.members-gate { display: flex; gap: 0.8rem; align-items: flex-start; max-width: 640px; margin-top: 1.6rem; padding: 1rem 1.15rem; background: var(--surface); border: 1px solid var(--gold-line); border-top: 3px solid var(--gold-deep); border-radius: var(--radius); }
+.members-gate__ic { flex: none; color: var(--gold-deep); margin-top: 1px; display: grid; }
+.members-gate__ic svg { width: 22px; height: 22px; }
+.members-gate p { margin: 0; font-size: var(--t-sm); color: var(--ink-soft); }
+
 .portal__grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
 
 .chat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden; display: flex; flex-direction: column; min-height: 520px; }
 .chat__head { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); background: var(--paper); }
-.chat__avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: var(--gold); display: grid; place-items: center; flex: none; }
+.chat__avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: var(--gold-bright); display: grid; place-items: center; flex: none; }
 .chat__avatar svg { width: 22px; height: 22px; }
 .chat__head h3 { font-family: var(--sans); font-size: var(--t-base); font-weight: 600; }
 .chat__head .status { font-size: var(--t-sm); color: var(--green); display: flex; align-items: center; gap: 0.4rem; }
@@ -72,15 +78,15 @@
 .chat__input { display: flex; gap: 0.6rem; padding: 1rem 1.25rem; border-top: 1px solid var(--line); background: var(--paper); }
 .chat__input input { flex: 1; padding: 0.75em 1em; border: 1.5px solid var(--line-strong); border-radius: 100px; background: var(--surface); font-size: var(--t-base); }
 .chat__input input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
-.chat__send { width: 46px; height: 46px; flex: none; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; transition: background-color .2s var(--ease), transform .2s var(--ease); }
-.chat__send:hover { background: oklch(24% 0.045 256); transform: translateY(-1px); }
+.chat__send { width: 46px; height: 46px; flex: none; border-radius: 50%; background: var(--gold-deep); color: oklch(99% 0.005 84); display: grid; place-items: center; transition: background-color .2s var(--ease), transform .2s var(--ease); }
+.chat__send:hover { background: oklch(50% 0.135 70); transform: translateY(-1px); }
 .chat__send svg { width: 20px; height: 20px; }
 
 .dash { display: flex; flex-direction: column; gap: 1.25rem; }
 .dash__total { background: var(--ink-invert); color: oklch(92% 0.02 84); border-radius: var(--radius-lg); padding: clamp(1.5rem, 3vw, 2.1rem); }
-.dash__total .eyebrow { color: var(--gold); }
+.dash__total .eyebrow { color: var(--gold-bright); }
 .dash__big { font-family: var(--serif); font-size: clamp(3rem, 7vw, 4.5rem); line-height: 1; color: oklch(96% 0.012 84); margin: 0.6rem 0 0.2rem; letter-spacing: -0.02em; }
-.dash__big span { font-size: 0.4em; color: var(--gold); margin-left: 0.3rem; }
+.dash__big span { font-size: 0.4em; color: var(--gold-bright); margin-left: 0.3rem; }
 .dash__sub { font-size: var(--t-sm); color: oklch(72% 0.02 84); }
 .dash__sessions { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(1.25rem, 2.5vw, 1.75rem); }
 .dash__sessions h4 { font-family: var(--sans); font-size: var(--t-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; }

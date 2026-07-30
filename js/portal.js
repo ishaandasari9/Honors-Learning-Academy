@@ -182,7 +182,50 @@
   sendBtn.addEventListener("click", send);
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); send(); } });
 
-  // kick off
-  bot("Welcome to the HLA members portal. What's your name?", 300);
-  renderDash("");
+  // ---- password gate (casual: see HLA_PORTAL_CODE note in config.js) ----
+  const lock = document.getElementById("portalLock");
+  const shell = document.getElementById("portalShell");
+  const passInput = document.getElementById("portalPass");
+  const enterBtn = document.getElementById("portalEnter");
+  const passErr = document.getElementById("portalErr");
+  const CODE = String(window.HLA_PORTAL_CODE || "");
+  const SS_KEY = "hla_portal_unlocked";
+  let started = false;
+
+  function startLogger() {
+    if (started) return;
+    started = true;
+    bot("Welcome back. This is where approved HLA tutors log volunteer hours. What's your name?", 300);
+    renderDash("");
+  }
+  function unlock() {
+    if (lock) lock.style.display = "none";
+    if (shell) shell.classList.add("show");
+    startLogger();
+  }
+  function tryUnlock() {
+    if (!CODE || passInput.value === CODE) {
+      try { sessionStorage.setItem(SS_KEY, "1"); } catch (e) {}
+      if (passErr) passErr.style.display = "none";
+      passInput.setAttribute("aria-invalid", "false");
+      passInput.value = "";
+      unlock();
+      const ci = document.getElementById("chatInput"); // keep keyboard/SR focus in the revealed logger
+      if (ci) ci.focus();
+    } else {
+      if (passErr) passErr.style.display = "block";
+      passInput.setAttribute("aria-invalid", "true");
+      passInput.value = "";
+      passInput.focus();
+    }
+  }
+
+  let alreadyIn = false;
+  try { alreadyIn = sessionStorage.getItem(SS_KEY) === "1"; } catch (e) {}
+  if (!lock || alreadyIn) {
+    unlock();                 // no gate in the DOM, or already unlocked this session
+  } else {
+    enterBtn.addEventListener("click", tryUnlock);
+    passInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); tryUnlock(); } });
+  }
 })();

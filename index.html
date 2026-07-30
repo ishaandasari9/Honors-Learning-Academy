@@ -85,23 +85,53 @@
           <p>Four core subjects every student needs, plus specialized tracks for the ones already looking ahead.</p>
         </div>
 
+        <p class="subjects__hint reveal">Tap any subject to see what it covers and request a tutor.</p>
+
         <div class="subjects__group reveal">
-          <span class="pill pill--green" style="margin-bottom:1rem">Core subjects</span>
+          <span class="pill pill--blue" style="margin-bottom:1rem">Core subjects</span>
           <div class="subjects__grid">
-            <div class="subj"><div class="subj__ic" data-ic="calc"></div><div><h4>Math</h4><p>Counting and fractions through algebra, geometry, and calculus.</p></div></div>
-            <div class="subj"><div class="subj__ic" data-ic="flask"></div><div><h4>Science</h4><p>Elementary science up to biology, chemistry, and physics.</p></div></div>
-            <div class="subj"><div class="subj__ic" data-ic="pen"></div><div><h4>English &amp; Writing</h4><p>Reading, essays, grammar, and the dreaded research paper.</p></div></div>
-            <div class="subj"><div class="subj__ic" data-ic="globe"></div><div><h4>Social Studies</h4><p>History, geography, civics, and how to study for them.</p></div></div>
+            <details class="subj">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="calc"></span><span class="subj__name">Math</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>Counting and fractions through algebra, geometry, and calculus.</p><a class="subj__req" href="students.html#request">Request a math tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="flask"></span><span class="subj__name">Science</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>Elementary science up to biology, chemistry, and physics.</p><a class="subj__req" href="students.html#request">Request a science tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="pen"></span><span class="subj__name">English &amp; Writing</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>Reading, essays, grammar, and the dreaded research paper.</p><a class="subj__req" href="students.html#request">Request a writing tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="globe"></span><span class="subj__name">Social Studies</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>History, geography, civics, and how to study for them.</p><a class="subj__req" href="students.html#request">Request a social studies tutor <span data-ic="arrow"></span></a></div>
+            </details>
           </div>
         </div>
 
         <div class="subjects__group reveal">
           <span class="pill pill--gold" style="margin-bottom:1rem">Specialized tracks</span>
           <div class="subjects__grid">
-            <div class="subj subj--spec"><div class="subj__ic" data-ic="code"></div><div><h4>Computer Science</h4><p>From first lines of Python to data structures and projects.</p></div></div>
-            <div class="subj subj--spec"><div class="subj__ic" data-ic="briefcase"></div><div><h4>Business</h4><p>How money, markets, and a simple business plan actually work.</p></div></div>
-            <div class="subj subj--spec"><div class="subj__ic" data-ic="heart"></div><div><h4>Pre-Med</h4><p>The science and the path: coursework, mindset, and what's ahead.</p></div></div>
-            <div class="subj subj--spec"><div class="subj__ic" data-ic="scale"></div><div><h4>Pre-Law</h4><p>Public speaking, legal literacy, and how to argue a point well.</p></div></div>
+            <details class="subj subj--spec">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="code"></span><span class="subj__name">Computer Science</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>From first lines of Python to data structures and real projects.</p><a class="subj__req" href="students.html#request">Request a CS tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj subj--spec">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="briefcase"></span><span class="subj__name">Business</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>How money, markets, and a simple business plan actually work.</p><a class="subj__req" href="students.html#request">Request a business tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj subj--spec">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="heart"></span><span class="subj__name">Pre-Med</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>The science and the path: coursework, mindset, and what is ahead.</p><a class="subj__req" href="students.html#request">Request a pre-med tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj subj--spec">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="scale"></span><span class="subj__name">Pre-Law</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>Public speaking, legal literacy, and how to argue a point well.</p><a class="subj__req" href="students.html#request">Request a pre-law tutor <span data-ic="arrow"></span></a></div>
+            </details>
+            <details class="subj subj--feature">
+              <summary class="subj__summary"><span class="subj__ic" data-ic="spark"></span><span class="subj__name">AP Exam Prep</span><span class="subj__badge">Exam season</span><span class="subj__toggle" aria-hidden="true"></span></summary>
+              <div class="subj__body"><p>Targeted review and timed practice for AP exams across subjects, from AP Calculus and Biology to AP US History and Language. In the weeks before the test, we focus on exactly what the exam rewards.</p><a class="subj__req" href="students.html#request">Ask about AP exam prep <span data-ic="arrow"></span></a></div>
+            </details>
           </div>
         </div>
 
@@ -118,11 +148,11 @@
             </div>
             <div class="formats__item">
               <h4>Homework help.</h4>
-              <p>Bring the assignment that is stuck and leave with it understood.</p>
+              <p>Bring an assignment that looks confusing, and leave with it completely clear.</p>
             </div>
             <div class="formats__item">
-              <h4>Test prep.</h4>
-              <p>Focused sessions before a unit test or a final.</p>
+              <h4>Test &amp; AP prep.</h4>
+              <p>Focused sessions before a unit test, a final, or an AP exam.</p>
             </div>
           </div>
         </div>
@@ -151,7 +181,7 @@
         </div>
         <div class="cluster reveal" style="margin-top:2.5rem">
           <a class="btn btn--primary" href="students.html#request">Request a tutor <span data-ic="arrow"></span></a>
-          <a class="link-gold" href="students.html">See how families get started</a>
+          <a class="link-blue" href="students.html">See how families get started <span data-ic="arrow"></span></a>
         </div>
       </div>
     </section>
@@ -184,7 +214,7 @@
     </section>
 
     <!-- TRUST -->
-    <section class="section band-green">
+    <section class="section band-blue">
       <div class="wrap trust-layout">
         <div class="trust-layout__head sec-head reveal">
           <span class="eyebrow">Why families trust us</span>
@@ -219,7 +249,7 @@
         <div class="trust-layout__items trust">
           <div class="trust__item reveal">
             <div class="trust__ic" data-ic="heart"></div>
-            <div><h4>Free, no catch</h4><p>We're a nonprofit pursuing 501(c)(3) status. No fees, no upsells, no paid tiers. Ever.</p></div>
+            <div><h4>Genuinely free</h4><p>Private tutoring runs $40 to $80 an hour. Ours is free, and always will be. No fees, no upsells, no paid tiers.</p></div>
           </div>
           <div class="trust__item reveal" data-delay="1">
             <div class="trust__ic" data-ic="clock"></div>
@@ -246,15 +276,15 @@
           </details>
           <details>
             <summary>Online or in person?<span class="ic"></span></summary>
-            <div class="faq__body">Both. Online works anywhere. In person happens around Waxhaw and Marvin, North Carolina.</div>
+            <div class="faq__body">Both. Online works anywhere. In person happens around Waxhaw, North Carolina.</div>
           </details>
           <details>
             <summary>What grades and subjects?<span class="ic"></span></summary>
-            <div class="faq__body">Kindergarten through 12th. Math, science, English and writing, and social studies, plus computer science, business, pre-med, and pre-law.</div>
+            <div class="faq__body">Kindergarten through 12th. Math, science, English and writing, and social studies, plus computer science, business, pre-med, and pre-law. We also offer focused AP exam prep.</div>
           </details>
         </div>
         <p class="reveal" style="margin-top:1.5rem">
-          <a class="link-gold" href="students.html#faq">See all questions</a>
+          <a class="link-blue" href="students.html#faq">See all questions <span data-ic="arrow"></span></a>
         </p>
       </div>
     </section>

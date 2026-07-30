@@ -19,13 +19,37 @@
   <main id="main">
 
     <section class="page-hero wrap" style="padding-bottom:1rem">
-      <span class="eyebrow reveal">Members portal</span>
-      <h1 class="reveal" data-delay="1">Log your hours in under a minute.</h1>
-      <p class="lede reveal" data-delay="2">No login, no spreadsheet. Just tell the assistant your name, your hours, and the subject. Your running total updates on the spot.</p>
+      <span class="eyebrow reveal">Tutor account · Members only</span>
+      <h1 class="reveal" data-delay="1">Log your volunteer hours.</h1>
+      <p class="lede reveal" data-delay="2">This is the tutor side of Honors Learning Academy. If your application has been approved, tell the assistant your name, your hours, and the subject, and your verified total updates on the spot.</p>
+      <div class="members-gate reveal" data-delay="2">
+        <span class="members-gate__ic" data-ic="shield" aria-hidden="true"></span>
+        <p>For approved tutors only. New to HLA? <a class="link-gold" href="tutors.html#apply">Apply to become a tutor first</a>, then come back here to log your hours.</p>
+      </div>
     </section>
 
     <section class="section" style="padding-top:1.5rem">
       <div class="wrap">
+
+        <!-- PASSWORD GATE -->
+        <div class="admin-lock" id="portalLock">
+          <div class="form-card">
+            <div class="form-head">
+              <span class="eyebrow no-rule">Tutor access</span>
+              <h3 style="margin-top:.75rem">Enter the tutor password</h3>
+              <p>The hours logger is for approved HLA tutors. Enter the password we shared with you. Trouble getting in? <a class="link-gold" href="mailto:honorslearningacademy@gmail.com" data-mail>Email us</a>.</p>
+            </div>
+            <div class="field">
+              <label for="portalPass">Tutor password</label>
+              <input id="portalPass" type="password" autocomplete="current-password" placeholder="••••••••" aria-describedby="portalErr" aria-invalid="false" />
+              <span class="error" id="portalErr" role="alert" style="display:none">That password didn't match. Try again, or email us.</span>
+            </div>
+            <button class="btn btn--primary btn--lg btn--block" id="portalEnter">Unlock <span data-ic="arrow"></span></button>
+          </div>
+        </div>
+
+        <!-- LOGGER (revealed after unlock) -->
+        <div class="admin-shell" id="portalShell">
         <div class="portal__grid">
 
           <!-- Logger -->
@@ -58,14 +82,15 @@
                 <div class="dash__empty">No sessions yet. Your logged hours will appear here.</div>
               </div>
             </div>
-            <div class="card reveal" data-delay="3" style="background:var(--green-soft);border-color:transparent">
+            <div class="card reveal" data-delay="3" style="background:var(--ink);border-color:transparent">
               <div style="display:flex;gap:.7rem;align-items:flex-start">
-                <span style="color:var(--green);flex:none" data-ic="shield"></span>
-                <p style="font-size:var(--t-sm);color:var(--green);margin:0">Hours are recorded with a date and become official volunteer hours once HLA's 501(c)(3) status is granted. Keep them honest, they're on the record.</p>
+                <span style="color:var(--gold-bright);flex:none" data-ic="shield"></span>
+                <p style="font-size:var(--t-sm);color:var(--on-blue);margin:0">Hours are recorded with a date and become official volunteer hours once HLA's 501(c)(3) status is granted. Keep them honest, they're on the record.</p>
               </div>
             </div>
           </div>
 
+        </div>
         </div>
       </div>
     </section>
