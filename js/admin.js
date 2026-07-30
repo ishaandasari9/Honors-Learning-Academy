@@ -70,7 +70,7 @@
     { file: "index.html", label: "Home page" },
     { file: "students.html", label: "For Families page" },
     { file: "tutors.html", label: "Become a Tutor page" },
-    { file: "portal.html", label: "Log Hours page" },
+    { file: "hours.html", label: "Tutor hours page" },
     { file: "privacy.html", label: "Privacy page" }
   ];
   let editsDraft = {};
@@ -248,16 +248,17 @@
     host.innerHTML = '<div class="data-empty">Loading…</div>';
     const rows = await window.HLA.store.allHours();
     if (!rows.length) { host.innerHTML = '<div class="data-empty">No hours logged yet.</div>'; return; }
+    const who = r => (r.tutor_email || r.name || "").trim();
     const totals = {};
-    rows.forEach(r => { const k = (r.name || "").trim(); totals[k] = (totals[k] || 0) + (parseFloat(r.hours) || 0); });
+    rows.forEach(r => { const k = who(r); totals[k] = (totals[k] || 0) + (parseFloat(r.hours) || 0); });
     const grand = Object.values(totals).reduce((a, b) => a + b, 0);
     host.innerHTML = `
-      <p style="margin-bottom:1rem;color:var(--ink-soft)"><strong>${Math.round(grand * 10) / 10}</strong> total hours across <strong>${Object.keys(totals).length}</strong> members.</p>
+      <p style="margin-bottom:1rem;color:var(--ink-soft)"><strong>${Math.round(grand * 10) / 10}</strong> total hours across <strong>${Object.keys(totals).length}</strong> tutors.</p>
       <div class="table-scroll"><table class="data-table">
-      <thead><tr><th>When</th><th>Member</th><th>Subject</th><th>Hours</th><th>Session date</th></tr></thead>
+      <thead><tr><th>When</th><th>Tutor</th><th>Subject</th><th>Hours</th><th>Session date</th></tr></thead>
       <tbody>${rows.map(r => `<tr>
         <td>${fmtDate(r.created_at)}</td>
-        <td>${esc(r.name || "")}</td>
+        <td>${esc(who(r))}</td>
         <td>${esc(r.subject || "")}</td>
         <td>${parseFloat(r.hours) || 0}</td>
         <td>${esc(r.date || "")}</td>

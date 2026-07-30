@@ -33,6 +33,17 @@
   const auth = {
     signedIn() { return !!authToken(); },
     signOut() { try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {} },
+    /* identity read from the JWT (no extra request); email is used only for the greeting */
+    user() {
+      const t = authToken();
+      if (!t) return null;
+      try {
+        let s = String(t).split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+        while (s.length % 4) s += "=";
+        const p = JSON.parse(atob(s));
+        return { id: p.sub || "", email: p.email || "" };
+      } catch (e) { return null; }
+    },
     async signIn(email, password) {
       const res = await fetch(SB.url + "/auth/v1/token?grant_type=password", {
         method: "POST",
@@ -110,13 +121,15 @@
     },
 
     async logHours(entry) {
+      /* user_id is attached server-side by RLS (column default auth.uid());
+         the client never sends a name or a user id. */
       const row = Object.assign({ created_at: new Date().toISOString() }, entry);
       if (hasSB) {
         await sb("hours", { method: "POST", headers: { "Prefer": "return=minimal" }, body: JSON.stringify(row) });
       } else {
         const q = LS.get("hla_hours", []); q.push(row); LS.set("hla_hours", q);
       }
-      return this.getHours(entry.name);
+      return this.getMyHours();
     },
 
     async allHours() {
@@ -129,20 +142,19 @@
       return LS.get("hla_submissions", []).slice().reverse();
     },
 
-    async getHours(name) {
+    async getMyHours() {
+      /* RLS returns only the signed-in tutor's own rows, so no client-side
+         name filter is needed (or possible). */
       let rows = [];
       if (hasSB) {
         try {
-          rows = await sb("hours?select=name,hours,subject,date,created_at&order=created_at.desc") || [];
+          rows = await sb("hours?select=hours,subject,date,created_at&order=created_at.desc") || [];
         } catch { rows = []; }
       } else {
-        rows = LS.get("hla_hours", []);
+        rows = LS.get("hla_hours", []).slice().reverse();
       }
-      const key = (name || "").trim().toLowerCase();
-      const mine = rows.filter(r => (r.name || "").trim().toLowerCase() === key);
-      const total = mine.reduce((s, r) => s + (parseFloat(r.hours) || 0), 0);
-      mine.sort((a, b) => new Date(b.created_at || b.date) - new Date(a.created_at || a.date));
-      return { total: Math.round(total * 10) / 10, sessions: mine };
+      const total = rows.reduce((s, r) => s + (parseFloat(r.hours) || 0), 0);
+      return { total: Math.round(total * 10) / 10, sessions: rows };
     }
   };
 
@@ -223,7 +235,6 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="students.html">For families</a></li>
                 <li><a href="tutors.html">Become a tutor</a></li>
-                <li><a href="portal.html">Log hours</a></li>
               </ul>
             </div>
             <div>
@@ -231,7 +242,6 @@
               <ul style="list-style:none;display:grid;gap:.6rem">
                 <li><a href="students.html#request">Request a tutor</a></li>
                 <li><a href="tutors.html#apply">Apply to tutor</a></li>
-                <li><a href="portal.html">Log volunteer hours</a></li>
               </ul>
             </div>
             <div>

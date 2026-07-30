@@ -12,14 +12,6 @@ window.HLA_SUPABASE = {
   anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtdGRoYnhyZWh2bWd2bmhvaGRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5Njg0MzIsImV4cCI6MjA5OTU0NDQzMn0.bslcPJwCAJ_7LnYGAopD-3esAWMo6tjLMWyFxVvnBp4"
 };
 
-/* ---- Members portal gate ----
-   The hours logger is gated by this one shared tutor password. This is a
-   CASUAL gate that keeps casual visitors out, not real security: anything
-   shipped to the browser is readable in the page source. The real protection
-   for hours data is Supabase Row Level Security. Change this to the password
-   you give approved tutors, and reshare it if it ever leaks. */
-window.HLA_PORTAL_CODE = "honorstutor";
-
 /* ---- Editable content (defaults). Admin overrides are merged on top. ---- */
 window.HLA_DEFAULTS = {
   org: "Honors Learning Academy",
@@ -136,9 +128,11 @@ window.HLA_SOCIAL_ICONS = {
 };
 
 /* ---- Nav links (per audience). ---- */
+/* The tutor hours logger (hours.html) is intentionally NOT listed here or in
+   the footer, the same way admin.html is unlisted. Approved tutors reach it by
+   the URL we give them, and it sits behind Supabase Auth. */
 window.HLA_NAV = [
   { href: "index.html",    label: "Home" },
   { href: "students.html", label: "For Families" },
-  { href: "tutors.html",   label: "Become a Tutor" },
-  { href: "portal.html",   label: "Log Hours" }
+  { href: "tutors.html",   label: "Become a Tutor" }
 ];

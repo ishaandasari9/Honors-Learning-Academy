@@ -1,7 +1,8 @@
 /* ============================================================
-   HLA — Members Portal: guided hours logger + dashboard
-   A friendly step flow (no API needed). Quick replies use a
-   dedicated handler so a button label never becomes your name.
+   HLA — Tutor hours logger + dashboard (auth-gated)
+   Sign-in mirrors admin.js: real Supabase Auth, one auth pattern.
+   Identity comes from the session; logged rows attach to the
+   authenticated user id via RLS (the client never sends a name).
    ============================================================ */
 (function () {
   "use strict";
@@ -12,8 +13,9 @@
   const sendBtn = document.getElementById("chatSend");
   if (!log) return;
 
-  const draft = { name: "", hours: 0, subject: "", date: "" };
-  let state = "name";
+  const auth = window.HLA.auth;
+  const draft = { hours: 0, subject: "", date: "" };
+  let state = "hours";
 
   function todayStr() {
     return new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -56,15 +58,17 @@
     return Math.round(n * 100) / 100;
   }
 
-  /* ---- dashboard ---- */
-  async function renderDash(name) {
+  /* ---- dashboard (signed-in tutor's own rows, via RLS) ---- */
+  async function renderDash() {
     const totalEl = document.getElementById("dashTotal");
     const subEl = document.getElementById("dashSub");
     const listEl = document.getElementById("dashSessions");
     if (!totalEl) return;
-    const { total, sessions } = await window.HLA.store.getHours(name);
+    const { total, sessions } = await window.HLA.store.getMyHours();
     totalEl.innerHTML = total + '<span>hrs</span>';
-    subEl.textContent = name ? (sessions.length + " session" + (sessions.length === 1 ? "" : "s") + " logged for " + name) : "Log a session to see your total";
+    subEl.textContent = sessions.length
+      ? (sessions.length + " session" + (sessions.length === 1 ? "" : "s") + " logged")
+      : "Log a session to see your total";
     if (!sessions.length) {
       listEl.innerHTML = '<div class="dash__empty">No sessions yet. Your logged hours will appear here.</div>';
       return;
@@ -80,9 +84,9 @@
   }
   function escapeHtml(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
 
-  /* ---- flow ---- */
+  /* ---- logging flow ---- */
   function askConfirm() {
-    bot(`Got it. Logging ${draft.hours} hour${draft.hours === 1 ? "" : "s"} of ${draft.subject} on ${draft.date}, under ${draft.name}. Look right?`, 250);
+    bot(`Got it. Logging ${draft.hours} hour${draft.hours === 1 ? "" : "s"} of ${draft.subject} on ${draft.date}. Look right?`, 250);
     setTimeout(() => setQuick([
       { label: "Yes, log it", action: confirmYes },
       { label: "Start over", action: restart }
@@ -93,10 +97,10 @@
     user("Yes, log it");
     state = "saving";
     let res;
-    try { res = await window.HLA.store.logHours({ name: draft.name, hours: draft.hours, subject: draft.subject, date: draft.date }); }
+    try { res = await window.HLA.store.logHours({ hours: draft.hours, subject: draft.subject, date: draft.date }); }
     catch (e) { bot("Something hiccuped saving that. Mind trying once more?", 200); state = "confirm"; askConfirm(); return; }
     bot(`Done. You're now at ${res.total} hour${res.total === 1 ? "" : "s"} total. Nice work.`, 250);
-    renderDash(draft.name);
+    renderDash();
     state = "done";
     setTimeout(() => setQuick([
       { label: "Log another session", action: logMore },
@@ -108,7 +112,7 @@
     user("Log another session");
     draft.hours = 0; draft.subject = ""; draft.date = "";
     state = "hours";
-    bot(`Sure. How many hours this time, ${draft.name}?`, 250);
+    bot("Sure. How many hours this time?", 250);
   }
   function finish() {
     user("I'm done");
@@ -119,22 +123,13 @@
     user("Start over");
     draft.hours = 0; draft.subject = ""; draft.date = "";
     state = "hours";
-    bot(`No problem. How many hours did you tutor, ${draft.name}?`, 250);
+    bot("No problem. How many hours did you tutor?", 250);
   }
 
   function handleText(raw) {
     const text = (raw || "").trim();
     if (!text) return;
 
-    if (state === "name") {
-      draft.name = text;
-      user(text);
-      renderDash(draft.name);
-      bot(`Hi ${draft.name}. How many hours did you tutor?`, 250);
-      bot("You can say something like 1.5, or 90 minutes.", 600);
-      state = "hours";
-      return;
-    }
     if (state === "hours") {
       const h = parseHours(text);
       user(text);
@@ -166,7 +161,7 @@
       return;
     }
     if (state === "done" || state === "ended") {
-      // treat as a new session's hours under same name
+      // treat as the start of a new session
       draft.hours = 0; draft.subject = ""; draft.date = "";
       state = "hours";
       handleText(text);
@@ -182,50 +177,60 @@
   sendBtn.addEventListener("click", send);
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); send(); } });
 
-  // ---- password gate (casual: see HLA_PORTAL_CODE note in config.js) ----
-  const lock = document.getElementById("portalLock");
-  const shell = document.getElementById("portalShell");
-  const passInput = document.getElementById("portalPass");
-  const enterBtn = document.getElementById("portalEnter");
-  const passErr = document.getElementById("portalErr");
-  const CODE = String(window.HLA_PORTAL_CODE || "");
-  const SS_KEY = "hla_portal_unlocked";
+  /* ---- auth gate (real Supabase Auth, same pattern as admin.js) ---- */
+  const lock = document.getElementById("hoursLock");
+  const shell = document.getElementById("hoursShell");
+  const emailInput = document.getElementById("hoursEmail");
+  const passInput = document.getElementById("hoursPass");
+  const enterBtn = document.getElementById("hoursEnter");
+  const errEl = document.getElementById("hoursErr");
+  const signoutBtn = document.getElementById("hoursSignout");
+  const whoChip = document.getElementById("hoursWho");
   let started = false;
 
   function startLogger() {
     if (started) return;
     started = true;
-    bot("Welcome back. This is where approved HLA tutors log volunteer hours. What's your name?", 300);
-    renderDash("");
+    const u = auth.user && auth.user();
+    if (whoChip) whoChip.textContent = (u && u.email) ? ("Signed in as " + u.email) : "Signed in";
+    bot("Welcome back. How many hours did you tutor?", 300);
+    bot("You can say something like 1.5, or 90 minutes.", 650);
+    renderDash();
+    state = "hours";
   }
   function unlock() {
     if (lock) lock.style.display = "none";
     if (shell) shell.classList.add("show");
     startLogger();
   }
-  function tryUnlock() {
-    if (!CODE || passInput.value === CODE) {
-      try { sessionStorage.setItem(SS_KEY, "1"); } catch (e) {}
-      if (passErr) passErr.style.display = "none";
+  async function signIn() {
+    if (!enterBtn) return;
+    const original = enterBtn.innerHTML;
+    enterBtn.disabled = true;
+    enterBtn.innerHTML = "Signing in…";
+    try {
+      await auth.signIn(emailInput.value.trim(), passInput.value);
+      if (errEl) errEl.style.display = "none";
       passInput.setAttribute("aria-invalid", "false");
       passInput.value = "";
       unlock();
       const ci = document.getElementById("chatInput"); // keep keyboard/SR focus in the revealed logger
       if (ci) ci.focus();
-    } else {
-      if (passErr) passErr.style.display = "block";
+    } catch (e) {
+      if (errEl) errEl.style.display = "block";
       passInput.setAttribute("aria-invalid", "true");
       passInput.value = "";
       passInput.focus();
     }
+    enterBtn.disabled = false;
+    enterBtn.innerHTML = original;
   }
 
-  let alreadyIn = false;
-  try { alreadyIn = sessionStorage.getItem(SS_KEY) === "1"; } catch (e) {}
-  if (!lock || alreadyIn) {
-    unlock();                 // no gate in the DOM, or already unlocked this session
-  } else {
-    enterBtn.addEventListener("click", tryUnlock);
-    passInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); tryUnlock(); } });
+  if (auth.signedIn()) {
+    unlock();
+  } else if (enterBtn) {
+    enterBtn.addEventListener("click", signIn);
+    [emailInput, passInput].forEach(el => el && el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); signIn(); } }));
   }
+  if (signoutBtn) signoutBtn.addEventListener("click", () => { auth.signOut(); location.reload(); });
 })();
