@@ -1,5 +1,5 @@
 /* ============================================================
-   Honors Learning Academy — Design System
+   Honors Learning Academy : Design System
    Premium editorial, light. Source Serif 4 + Hanken Grotesk.
    ============================================================ */
 
@@ -374,7 +374,7 @@ strong { color: var(--ink); font-weight: 600; }
 .door--tutor p, .door--family p { color: var(--on-blue); }
 .door .btn { margin-top: 1.5rem; }
 
-/* Subjects — clickable expand-on-tap cards (FAQ affordance, tighter grid) */
+/* Subjects : clickable expand-on-tap cards (FAQ affordance, tighter grid) */
 .subjects__hint { font-size: var(--t-sm); color: var(--muted); margin: -0.5rem 0 1.5rem; }
 .subjects__group + .subjects__group { margin-top: clamp(1.75rem, 3vw, 2.5rem); }
 .subjects__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.75rem, 1.5vw, 1.1rem); align-items: start; }
