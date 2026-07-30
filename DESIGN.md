@@ -38,13 +38,13 @@ Never `#000`/`#fff`. Gold is a refined, vivid accent (warm brass, not neon and n
 Bold navy + gold "splashes" sit behind content on **every off-white section** — the hero, inner-page heroes, closing CTA, the sand bands, and the plain content sections (`.section:not(.band-sand):not(.band-blue):not(.cta-band)`) — via layered `radial-gradient` shapes on one `::before` per section: a gold blob, a small navy soft-blob, a crisp navy ring, and solid dots. Decorative, `pointer-events:none`, behind a raised-content layer (`isolation:isolate` + `z-index`). Contrast rule that keeps them safe: **navy soft-blobs stay ≤0.13 opacity** (muted caption text fails at 0.22 over navy), so navy reads boldly through the crisp **rings and dots** (thin/small, in margins), while **gold blobs may go to ~0.24** (body text still ≥6:1). A deliberate, client-directed exception to the general "no gradients-as-decoration" rule. The dark filled bands (navy boxes, the light-blue trust band) stay shape-free so they don't get busy.
 
 ## Typography
-- **Display / headings:** **Fraunces** (variable, soft optical serifs, high opsz). Weights 400–600, opsz high on large sizes for that editorial, almost literary feel. Tight-ish leading (1.02–1.08) on big headings.
+- **Display / headings:** **Source Serif 4** (variable, opsz + wght, roman + italic). Weights 460–600, optical sizing on for the editorial, institutional feel. Tight-ish leading (1.02–1.08) on big headings. (Replaced Fraunces, whose descending `f` and calligraphic `j` read too quirky for the brand; the WONK axis does not remove them.)
 - **Body / UI:** **Hanken Grotesk** (warm humanist grotesque). 400 body, 500 UI labels, 600 emphasis. Friendly + professional.
 - **Eyebrows / labels:** Hanken Grotesk, 12–13px, uppercase, letter-spacing 0.14em, gold or muted. (No monospace — that reads "techy," wrong register.)
 - Body line-length 62–72ch. Type scale ratio ≥1.25. Tabular figures for the hours dashboard + stats.
 
 CSS imports:
-`Fraunces:opsz,wght@9..144,400..600;Hanken+Grotesk:wght@400;500;600;700`
+`Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400..600;Hanken+Grotesk:wght@400;500;600;700`
 
 ## Layout
 - Generous, varied vertical rhythm (sections breathe at 96–140px desktop). Not uniform padding.
@@ -66,7 +66,7 @@ CSS imports:
 - **Boxed step grids:** the "how it works" steps sit in light `--surface` boxes with a **crisp 1.5px outline alternating gold / blue** (`:nth-child(even)`), lifting on hover, to anchor otherwise-bare white space.
 - **Forms:** visible labels, helper text, inline validation on blur, error below field, success state on submit, semantic input types. Generous spacing.
 - **Nav:** sticky, paper with hairline bottom border on scroll; clear active state; "Get a tutor" as the one primary CTA in the bar. Mobile: clean slide-down sheet.
-- **Hours portal:** guided conversational logger (no LLM needed — a friendly step flow) + a dashboard with running total in tabular Fraunces.
+- **Hours portal:** guided conversational logger (no LLM needed — a friendly step flow) + a dashboard with running total in tabular Source Serif 4.
 - **Admin:** calm form-based editor panel; sections for content, stats, contact, socials, colors, visibility. Saves via the data layer.
 
 ## Absolute bans (inherited + project)
