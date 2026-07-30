@@ -549,8 +549,7 @@ strong { color: var(--ink); font-weight: 600; }
   max-width: 28ch;
 }
 
-/* Team roster / Leaders */
-#leaders { scroll-margin-top: clamp(5rem, 8vw, 6rem); } /* clears the 72px sticky nav on jump */
+/* Team roster (the Leaders page) */
 .team {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

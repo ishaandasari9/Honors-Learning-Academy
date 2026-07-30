@@ -70,6 +70,7 @@
     { file: "index.html", label: "Home page" },
     { file: "students.html", label: "For Families page" },
     { file: "tutors.html", label: "Become a Tutor page" },
+    { file: "leaders.html", label: "Leaders page" },
     { file: "hours.html", label: "Tutor hours page" },
     { file: "privacy.html", label: "Privacy page" }
   ];

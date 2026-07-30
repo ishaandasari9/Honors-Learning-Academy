@@ -171,26 +171,12 @@
     return p === "" ? "index.html" : p;
   }
 
-  /* Active-nav match that understands anchor links (e.g. "index.html#leaders").
-     A plain link is active only on its page with no live hash; an anchor link
-     is active on its page when the URL hash matches, so exactly one lights up. */
-  function navMatch(href) {
-    const i = href.indexOf("#");
-    const path = (i === -1 ? href : href.slice(0, i)) || currentPage();
-    const hash = i === -1 ? "" : href.slice(i);
-    if (path !== currentPage()) return false;
-    return hash ? location.hash === hash : !location.hash;
-  }
-  function syncNavActive() {
-    document.querySelectorAll("#navLinks .nav__link").forEach(a =>
-      a.classList.toggle("active", navMatch(a.getAttribute("href"))));
-  }
-
   function buildNav() {
     const host = document.querySelector("[data-nav]");
     if (!host) return;
+    const here = currentPage();
     const links = NAV.map(n =>
-      `<a class="nav__link${navMatch(n.href) ? " active" : ""}" href="${n.href}">${n.label}</a>`).join("");
+      `<a class="nav__link${n.href === here ? " active" : ""}" href="${n.href}">${n.label}</a>`).join("");
     host.outerHTML = `
       <nav class="nav" id="siteNav" aria-label="Primary">
         <div class="wrap nav__inner">
@@ -217,9 +203,6 @@
 
     const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
     onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
-
-    // keep the active link correct when the hash changes (e.g. clicking "Leaders")
-    window.addEventListener("hashchange", syncNavActive);
   }
 
   function socialRow(socials, cls) {

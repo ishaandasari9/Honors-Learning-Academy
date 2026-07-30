@@ -132,8 +132,8 @@ window.HLA_SOCIAL_ICONS = {
    the footer, the same way admin.html is unlisted. Approved tutors reach it by
    the URL we give them, and it sits behind Supabase Auth. */
 window.HLA_NAV = [
-  { href: "index.html",         label: "Home" },
-  { href: "students.html",      label: "For Families" },
-  { href: "tutors.html",        label: "Become a Tutor" },
-  { href: "index.html#leaders", label: "Leaders" }
+  { href: "index.html",    label: "Home" },
+  { href: "students.html", label: "For Families" },
+  { href: "tutors.html",   label: "Become a Tutor" },
+  { href: "leaders.html",  label: "Leaders" }
 ];
