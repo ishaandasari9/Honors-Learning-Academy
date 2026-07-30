@@ -546,7 +546,8 @@ strong { color: var(--ink); font-weight: 600; }
   max-width: 28ch;
 }
 
-/* Team roster */
+/* Team roster / Leaders */
+#leaders { scroll-margin-top: clamp(5rem, 8vw, 6rem); } /* clears the 72px sticky nav on jump */
 .team {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -571,10 +572,10 @@ strong { color: var(--ink); font-weight: 600; }
   height: 100%;
   display: grid;
   place-items: center;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--gold-bright);
 }
-.band-sand .team__mono { background: var(--paper); }
+.band-sand .team__mono { background: var(--ink); }
 .team__mono span {
   font-family: var(--serif);
   font-size: clamp(2rem, 4vw, 2.75rem);
@@ -597,7 +598,7 @@ a.team__name:hover { color: var(--gold-ink); }
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--green);
+  color: var(--gold-ink);
 }
 .team__note { margin-top: clamp(1.75rem, 3vw, 2.5rem); color: var(--ink-soft); font-size: var(--t-sm); }
 .team__bio {
