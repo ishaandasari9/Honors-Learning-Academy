@@ -6,17 +6,23 @@
 --  client never sends a name or a user id — the database does.
 -- ============================================================
 
--- 0) The old logger wrote rows keyed by a typed name, with no owner.
---    Those cannot be attributed to a user, so clear them first (test data).
---    Skip this only if the hours table is already empty.
+-- 0) The old logger wrote rows keyed by a typed name, with no owner. Clear any
+--    such rows so the NOT NULL user_id can be added. In our run the table was
+--    already empty, so this was a no-op — safe to run either way.
 delete from public.hours;
 
--- 1) Attach every row to the signed-in user, and capture their email
---    (both filled server-side from the verified JWT, never from the client).
+-- 1) Attach every row to the signed-in user, and capture their email (both filled
+--    server-side from the verified JWT, never from the client). ON DELETE RESTRICT
+--    means deleting a tutor account cannot silently erase their logged hours: if
+--    you ever remove a tutor, delete or reassign their rows deliberately first.
 alter table public.hours
   add column if not exists user_id uuid not null default auth.uid()
-    references auth.users(id) on delete cascade,
+    references auth.users(id) on delete restrict,
   add column if not exists tutor_email text default (auth.jwt() ->> 'email');
+
+-- 1b) Drop the leftover `name` column from the old name-based logger. Identity now
+--     comes from user_id (and tutor_email for display), never a typed name.
+alter table public.hours drop column if exists name;
 
 -- 2) Lock the table: nothing is readable/writable unless a policy allows it.
 alter table public.hours enable row level security;
