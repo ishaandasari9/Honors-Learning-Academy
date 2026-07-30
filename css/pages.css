@@ -49,6 +49,25 @@
 .faq details[open] summary .ic { background: var(--gold-soft); border-color: var(--gold); }
 .faq details[open] summary .ic::before { background: var(--gold-ink); }
 .faq .faq__body { padding-bottom: 1.3rem; color: var(--ink-soft); max-width: 68ch; }
+
+/* "Next page" control under the homepage FAQ: a bordered navigation row
+   (not an inline text link) that clearly points to the families FAQ. */
+.faq-more {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  max-width: 760px; margin-top: 1.75rem;
+  padding: 1rem 1.1rem 1rem 1.4rem;
+  border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  color: var(--ink); font-weight: 600; font-size: var(--t-base);
+  transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.faq-more:hover { border-color: var(--ink); background: var(--surface); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.faq-more__arrow {
+  flex: none; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gold-deep); color: oklch(99% 0.005 84);
+  display: grid; place-items: center; transition: transform .25s var(--ease);
+}
+.faq-more__arrow svg { width: 1.05em; height: 1.05em; }
+.faq-more:hover .faq-more__arrow { transform: translateX(3px); }
 @media (prefers-reduced-motion: reduce) { .faq summary .ic, .faq summary .ic::after { transition: none; } }
 
 /* ============================================================

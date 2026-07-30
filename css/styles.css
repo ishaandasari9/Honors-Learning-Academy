@@ -324,6 +324,36 @@ strong { color: var(--ink); font-weight: 600; }
 .glance dt { color: var(--on-blue); opacity: 0.82; font-size: var(--t-sm); }
 .glance dd { font-family: var(--serif); font-weight: 500; color: oklch(98% 0.005 84); text-align: right; }
 
+/* Tutor hero "payoff" panel: answers "what do I get", so it is a lead claim +
+   a gold-checked list of gains, NOT the families spec sheet (badge + dt/dd). */
+.payoff {
+  background: var(--ink);
+  border: 1px solid oklch(100% 0 0 / 0.10);
+  border-top: 3px solid var(--gold-deep);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+  box-shadow: var(--shadow-md);
+  color: var(--on-blue);
+}
+.payoff__lead {
+  font-family: var(--serif); font-size: var(--t-lg); font-weight: 500; line-height: 1.3;
+  color: oklch(98% 0.005 84); margin: 0 0 1.25rem; max-width: none;
+}
+.payoff__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.payoff__list li {
+  display: flex; gap: 0.8rem; align-items: flex-start;
+  font-size: var(--t-base); line-height: 1.4; color: var(--on-blue);
+  padding: 0.9rem 0; border-top: 1px solid oklch(100% 0 0 / 0.13); max-width: none;
+}
+.payoff__list li:first-child { padding-top: 0; border-top: none; }
+.payoff__list li:last-child { padding-bottom: 0; }
+.payoff__ic {
+  flex: none; width: 1.5em; height: 1.5em; margin-top: 0.05em; border-radius: 50%;
+  background: oklch(64% 0.135 80 / 0.20); color: var(--gold-bright);
+  display: grid; place-items: center;
+}
+.payoff__ic svg { width: 0.8em; height: 0.8em; }
+
 /* Stat band (editorial dividers, not glowing cards) */
 .statband { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); }
 .statband .stat { padding: clamp(1.5rem, 3vw, 2.25rem); border-right: 1px solid var(--line); }
