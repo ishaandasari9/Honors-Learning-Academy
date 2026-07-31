@@ -330,7 +330,10 @@ strong { color: var(--ink); font-weight: 600; }
 .field.invalid .error { display: block; }
 .choice-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .choice {
-  display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.6em 1em; border: 1.5px solid var(--line-strong);
+  display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.6em 1em;
+  /* resting border clears WCAG 1.4.11 (3:1) so an unchecked pill reads as a control;
+     hover/checked promote it to --ink. (--line-strong is too light here at 1.71:1.) */
+  border: 1.5px solid oklch(62% 0.02 84);
   border-radius: 100px; font-size: var(--t-sm); font-weight: 500; cursor: pointer; transition: all .2s var(--ease); user-select: none;
 }
 /* visually hidden, but sized so the global .field input { width:100% } can't

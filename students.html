@@ -134,6 +134,9 @@
             <p>Takes about two minutes. We only use these details to make the match and reach you.</p>
           </div>
 
+          <!-- Multi-step flow, built and revealed by js/request-flow.js. The plain <form> below is the no-JS fallback. -->
+          <form class="reqflow" data-reqflow novalidate hidden aria-label="Request a tutor"></form>
+
           <form data-hla-form="request" novalidate>
             <div class="form-grid">
               <div class="field span-2">
@@ -255,5 +258,6 @@
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
   <script src="js/forms.js"></script>
+  <script src="js/request-flow.js"></script>
 </body>
 </html>

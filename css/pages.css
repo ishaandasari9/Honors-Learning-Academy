@@ -37,6 +37,46 @@
 @keyframes pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .form-success.show { animation: none; } }
 
+/* ============================================================
+   Multi-step request flow (students): a button-driven version of
+   the request form. Reuses .choice / .field / .btn / .form-success;
+   the plain <form> stays as the no-JS fallback.
+   ============================================================ */
+.reqflow[hidden] { display: none; }
+.reqflow__progress { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.6rem; }
+.reqflow__count { font-family: var(--sans); font-size: var(--t-eyebrow); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold-ink); margin: 0; }
+.reqflow__dots { list-style: none; display: flex; gap: 0.45rem; margin: 0; padding: 0; }
+.reqflow__dots li { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); transition: background-color .2s var(--ease), transform .2s var(--ease); }
+.reqflow__dots li.done { background: var(--gold-deep); }
+.reqflow__dots li.current { background: var(--ink); transform: scale(1.18); }
+.reqflow__step[hidden] { display: none; }
+.reqflow__q { font-family: var(--serif); font-weight: 500; font-size: var(--t-xl); color: var(--ink); line-height: 1.2; letter-spacing: -0.01em; }
+.reqflow__q:focus, .reqflow__err:focus { outline: none; }
+.reqflow__hint { font-size: var(--t-sm); color: var(--muted); margin: 0.5rem 0 0; }
+.reqflow__choices { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.35rem; }
+.reqflow__group + .reqflow__group { margin-top: 1.35rem; }
+.reqflow__grouplabel { font-size: var(--t-eyebrow); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 0.7rem; }
+.reqflow__other { margin-top: 1.1rem; max-width: 400px; }
+.reqflow__step .field { margin-bottom: 1.25rem; }
+.reqflow__step .field:last-of-type { margin-bottom: 0; }
+.reqflow__err { font-size: var(--t-sm); color: oklch(50% 0.18 25); margin: 1.1rem 0 0; display: none; }
+.reqflow__err.show { display: block; }
+.reqflow__nav { display: flex; align-items: center; gap: 0.85rem; margin-top: 2rem; }
+.reqflow__next { margin-left: auto; }
+.reqflow__step .fineprint { font-size: var(--t-sm); color: var(--muted); margin-top: 1.35rem; display: flex; gap: 0.5rem; align-items: flex-start; }
+.reqflow__step .fineprint svg { width: 16px; height: 16px; color: var(--green); flex: none; margin-top: 2px; }
+.reqflow__success[hidden] { display: none; }
+.reqflow__success:not([hidden]) { display: block; animation: pop .5s var(--ease); }
+@keyframes reqfade { from { opacity: 0; } to { opacity: 1; } }
+.reqflow__step.is-active { animation: reqfade .16s var(--ease); }
+@media (prefers-reduced-motion: reduce) {
+  .reqflow__step.is-active { animation: none; }
+  .reqflow__success:not([hidden]) { animation: none; }
+  .reqflow__dots li { transition: none; }
+}
+/* keyboard focus ring on choice pills (their inputs are visually hidden) */
+.choice:has(input:focus-visible) { outline: 2.5px solid var(--gold); outline-offset: 3px; }
+
 /* FAQ via <details> */
 .faq { max-width: 760px; }
 .faq details { border-bottom: 1px solid var(--line); }
