@@ -427,6 +427,21 @@
 
   function reObserveReveals() { initReveals(); }
 
+  /* ---- Sticky mobile CTA dock (index only): show once the hero has scrolled
+     out of view, hide again as the closing CTA band approaches, so the primary
+     action stays one tap away without ever fighting the sticky top nav. ---- */
+  function initCtaDock() {
+    const dock = document.querySelector("[data-cta-dock]");
+    if (!dock || !("IntersectionObserver" in window)) return;
+    const hero = document.querySelector(".hero");
+    const end = document.querySelector(".cta-band") || document.querySelector(".footer");
+    let heroGone = !hero, endNear = false;
+    const update = () => dock.classList.toggle("show", heroGone && !endNear);
+    if (hero) new IntersectionObserver(([e]) => { heroGone = !e.isIntersecting; update(); }).observe(hero);
+    if (end) new IntersectionObserver(([e]) => { endNear = e.isIntersecting; update(); }, { rootMargin: "0px 0px -8% 0px" }).observe(end);
+    update();
+  }
+
   /* ---- boot ---- */
   async function boot() {
     hydrateMarks();            // icons/crest first; does not depend on content
@@ -438,6 +453,7 @@
     applyContent();
     hydrateMarks();            // safety net for injected DOM (nav, footer, team, stats)
     initReveals();              // observe any newly injected reveals (e.g. stats, team)
+    initCtaDock();              // index-only sticky mobile CTA
     document.documentElement.classList.add("hla-ready");
   }
 

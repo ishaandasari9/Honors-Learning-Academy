@@ -266,6 +266,30 @@ strong { color: var(--ink); font-weight: 600; }
 .announce__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-bright); flex: none; box-shadow: 0 0 0 3px oklch(74% 0.15 84 / 0.28); }
 .announce p { margin: 0; max-width: none; }
 
+/* ---- Sticky mobile "Request a tutor" dock (index only). While scrolling, the
+   nav CTA is tucked inside the burger menu, so this keeps the primary action one
+   tap away. JS adds .show after the hero scrolls out and removes it as the
+   closing CTA approaches; it never overlaps the top nav. Mobile only. ---- */
+.cta-dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  background: oklch(97.6% 0.011 84 / 0.9);
+  backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-top: 1px solid var(--line); box-shadow: 0 -6px 22px oklch(28% 0.045 256 / 0.10);
+  padding: 0.6rem clamp(1rem, 5vw, 1.5rem);
+  padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
+  transform: translateY(110%); opacity: 0; visibility: hidden;
+  transition: transform .36s var(--ease), opacity .3s var(--ease), visibility 0s linear .36s;
+}
+.cta-dock.show { transform: none; opacity: 1; visibility: visible; transition: transform .4s var(--ease), opacity .3s var(--ease); }
+.cta-dock__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: var(--maxw); margin-inline: auto; }
+.cta-dock__label { font-family: var(--serif); font-size: 1.02rem; font-weight: 500; color: var(--ink); line-height: 1.15; }
+.cta-dock__label small { display: block; font-family: var(--sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em; color: var(--muted); }
+.cta-dock .btn { padding: 0.7em 1.15em; min-height: 44px; white-space: nowrap; }
+@media (min-width: 881px) { .cta-dock { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .cta-dock, .cta-dock.show { transition: none; transform: none; }
+}
+
 /* ---- Stats ---- */
 .stat__value { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 480; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
 .stat__label { font-weight: 600; color: var(--ink); margin-top: 0.5rem; }
