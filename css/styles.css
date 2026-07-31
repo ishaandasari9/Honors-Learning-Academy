@@ -182,21 +182,18 @@ strong { color: var(--ink); font-weight: 600; }
   .footer__grid li a { text-decoration: underline; text-decoration-color: oklch(52% 0.03 256); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 }
 
-/* contextual color shapes: a soft blurred blue + gold blob hugging the primary CTA clusters */
+/* contextual color shapes: a soft blurred blue + gold glow behind the primary
+   CTA clusters. No horizontal bleed: the cluster is full width, so any side
+   bleed pushes past the viewport and causes real horizontal scroll (on phones,
+   and at mid-desktop widths below the wrap max-width). Vertical glow only. */
 .hero__btns, .cta-band .cluster { position: relative; }
 .hero__btns > *, .cta-band .cluster > * { position: relative; z-index: 1; }
 .hero__btns::before, .cta-band .cluster::before {
-  content: ""; position: absolute; inset: -34% -8% -44% -8%; z-index: 0; pointer-events: none;
+  content: ""; position: absolute; inset: -34% 0 -44% 0; z-index: 0; pointer-events: none;
   border-radius: 60px; filter: blur(9px);
   background:
     radial-gradient(46% 82% at 20% 52%, oklch(64% 0.135 80 / 0.22), transparent 72%),
     radial-gradient(40% 74% at 80% 56%, oklch(44% 0.140 260 / 0.16), transparent 72%);
-}
-/* On phones the CTA cluster is near full width; the -8% side bleed pushes the
-   blob past the viewport (a few px of real horizontal scroll). Drop the side
-   bleed at narrow widths, keep the vertical glow. */
-@media (max-width: 700px) {
-  .hero__btns::before, .cta-band .cluster::before { inset: -34% 0 -44% 0; }
 }
 
 /* ---- Cards ---- */
