@@ -318,7 +318,9 @@ strong { color: var(--ink); font-weight: 600; }
 .field .req { color: var(--gold-ink); }
 .field .hint { font-size: var(--t-sm); color: var(--muted); }
 .field input, .field select, .field textarea {
-  width: 100%; padding: 0.8em 0.95em; border: 1.5px solid var(--line-strong); border-radius: var(--radius-sm);
+  /* border clears WCAG 1.4.11 (3:1) so the input boundary is visible (matches
+     the .choice pills; --line-strong was 1.71:1). */
+  width: 100%; padding: 0.8em 0.95em; border: 1.5px solid oklch(62% 0.02 84); border-radius: var(--radius-sm);
   background: var(--surface); color: var(--ink); font-size: var(--t-base);
   transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
 }
@@ -824,9 +826,12 @@ a.team__name:hover { color: var(--gold-ink); }
   .nav__links {
     position: fixed; inset: 72px 0 auto 0; flex-direction: column; align-items: stretch; gap: 0.25rem;
     background: var(--paper); border-bottom: 1px solid var(--line); padding: 1rem clamp(1.25rem, 5vw, 3rem) 1.5rem;
-    transform: translateY(-130%); transition: transform .4s var(--ease); box-shadow: var(--shadow-md); z-index: 99;
+    transform: translateY(-130%); box-shadow: var(--shadow-md); z-index: 99;
+    /* closed = out of the tab order. It used to only translate off-screen, so a
+       keyboard/switch user tabbed into invisible off-screen nav links. */
+    visibility: hidden; transition: transform .4s var(--ease), visibility 0s linear .4s;
   }
-  .nav.open .nav__links { transform: translateY(0); }
+  .nav.open .nav__links { transform: translateY(0); visibility: visible; transition: transform .4s var(--ease); }
   .nav__link { padding: 0.85em 0.5em; font-size: var(--t-base); border-bottom: 1px solid var(--line); border-radius: 0; }
   .nav__link:hover { background: transparent; }
   .nav__link.active::after { display: none; }

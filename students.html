@@ -16,7 +16,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <div data-nav></div>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
 
     <!-- HERO -->
     <section class="page-hero wrap">
@@ -177,8 +177,8 @@
               </div>
 
               <div class="field span-2">
-                <label>How would you like to meet? <span class="req">*</span></label>
-                <div class="choice-row" data-choice="format">
+                <label id="r-format-q">How would you like to meet? <span class="req">*</span></label>
+                <div class="choice-row" data-choice="format" role="radiogroup" aria-labelledby="r-format-q">
                   <label class="choice"><input type="radio" name="format" value="Online" required />Online</label>
                   <label class="choice"><input type="radio" name="format" value="In person" />In person</label>
                   <label class="choice"><input type="radio" name="format" value="Either works" />Either works</label>

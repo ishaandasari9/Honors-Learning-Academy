@@ -176,7 +176,7 @@
     if (!host) return;
     const here = currentPage();
     const links = NAV.map(n =>
-      `<a class="nav__link${n.href === here ? " active" : ""}" href="${n.href}">${n.label}</a>`).join("");
+      `<a class="nav__link${n.href === here ? " active" : ""}"${n.href === here ? ' aria-current="page"' : ""} href="${n.href}">${n.label}</a>`).join("");
     host.outerHTML = `
       <nav class="nav" id="siteNav" aria-label="Primary">
         <div class="wrap nav__inner">
@@ -194,12 +194,20 @@
 
     const nav = document.getElementById("siteNav");
     const burger = document.getElementById("navBurger");
-    burger.addEventListener("click", () => {
-      const open = nav.classList.toggle("open");
+    const navLinks = document.getElementById("navLinks");
+    function setNavOpen(open) {
+      nav.classList.toggle("open", open);
       burger.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    burger.addEventListener("click", () => {
+      const open = !nav.classList.contains("open");
+      setNavOpen(open);
+      if (open) { const first = navLinks.querySelector("a"); if (first) first.focus(); }  // move focus into the sheet
     });
-    document.querySelectorAll("#navLinks a").forEach(a =>
-      a.addEventListener("click", () => nav.classList.remove("open")));
+    navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setNavOpen(false)));
+    nav.addEventListener("keydown", (e) => {  // Escape closes the mobile sheet and returns focus to the burger
+      if (e.key === "Escape" && nav.classList.contains("open")) { setNavOpen(false); burger.focus(); }
+    });
 
     const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
     onScroll(); window.addEventListener("scroll", onScroll, { passive: true });

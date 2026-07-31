@@ -65,7 +65,7 @@
     const success = card ? card.querySelector("[data-success]") : null;
     const submitBtn = form.querySelector('[type="submit"]');
 
-    form.querySelectorAll(".field").forEach(function (f, i) { var inp = f.querySelector("input, select, textarea"); var er = f.querySelector(".error"); if (!inp || !er) return; if (!er.id) er.id = (kind || "form") + "-err-" + i; inp.setAttribute("aria-describedby", er.id); }); var live = document.createElement("p"); live.setAttribute("aria-live", "polite"); live.className = "visually-hidden"; form.appendChild(live); function announce(m) { live.textContent = ""; setTimeout(function () { live.textContent = m; }, 60); }
+    form.querySelectorAll(".field").forEach(function (f, i) { var inp = f.querySelector("input, select, textarea"); var er = f.querySelector(".error"); if (!inp || !er) return; if (!er.id) er.id = (kind || "form") + "-err-" + i; var hint = f.querySelector(".hint"); if (hint && !hint.id) hint.id = (kind || "form") + "-hint-" + i; inp.setAttribute("aria-describedby", [hint && hint.id, er.id].filter(Boolean).join(" ")); }); var live = document.createElement("p"); live.setAttribute("aria-live", "polite"); live.className = "visually-hidden"; form.appendChild(live); function announce(m) { live.textContent = ""; setTimeout(function () { live.textContent = m; }, 60); }
     form.querySelectorAll("input, select, textarea").forEach(el => {
       el.addEventListener("blur", () => { if (fieldOf(el)) validateField(fieldOf(el)); });
       el.addEventListener("input", () => {

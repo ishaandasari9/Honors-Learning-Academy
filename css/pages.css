@@ -160,7 +160,7 @@
 .msg--user { align-self: flex-end; background: var(--ink); color: var(--paper); border-bottom-right-radius: 5px; }
 .chat__quick { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0 1.25rem 0.5rem; }
 .chat__input { display: flex; gap: 0.6rem; padding: 1rem 1.25rem; border-top: 1px solid var(--line); background: var(--paper); }
-.chat__input input { flex: 1; padding: 0.75em 1em; border: 1.5px solid var(--line-strong); border-radius: 100px; background: var(--surface); font-size: var(--t-base); }
+.chat__input input { flex: 1; padding: 0.75em 1em; border: 1.5px solid oklch(62% 0.02 84); border-radius: 100px; background: var(--surface); font-size: var(--t-base); }
 .chat__input input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
 .chat__send { width: 46px; height: 46px; flex: none; border-radius: 50%; background: var(--gold-deep); color: oklch(99% 0.005 84); display: grid; place-items: center; transition: background-color .2s var(--ease), transform .2s var(--ease); }
 .chat__send:hover { background: oklch(50% 0.135 70); transform: translateY(-1px); }
