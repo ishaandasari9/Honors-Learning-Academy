@@ -178,6 +178,12 @@ strong { color: var(--ink); font-weight: 600; }
     radial-gradient(46% 82% at 20% 52%, oklch(64% 0.135 80 / 0.22), transparent 72%),
     radial-gradient(40% 74% at 80% 56%, oklch(44% 0.140 260 / 0.16), transparent 72%);
 }
+/* On phones the CTA cluster is near full width; the -8% side bleed pushes the
+   blob past the viewport (a few px of real horizontal scroll). Drop the side
+   bleed at narrow widths, keep the vertical glow. */
+@media (max-width: 700px) {
+  .hero__btns::before, .cta-band .cluster::before { inset: -34% 0 -44% 0; }
+}
 
 /* ---- Cards ---- */
 .card {
@@ -224,7 +230,9 @@ strong { color: var(--ink); font-weight: 600; }
 
 /* ---- Footer ---- */
 .footer { background: var(--ink-invert); color: oklch(78% 0.02 84); padding-block: clamp(3rem, 6vw, 5rem) 2.5rem; border-top: 3px solid var(--gold-deep); }
-.footer a { color: oklch(82% 0.02 84); transition: color .2s var(--ease); }
+/* overflow-wrap:anywhere lets the long contact email break instead of forcing
+   the footer grid wider than a phone viewport (real horizontal-scroll cause) */
+.footer a { color: oklch(82% 0.02 84); overflow-wrap: anywhere; transition: color .2s var(--ease); }
 .footer a:hover { color: var(--gold-bright); }
 .footer h4 { color: oklch(94% 0.012 84); font-family: var(--sans); font-size: var(--t-sm); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 1rem; }
 .footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2.5rem; }
@@ -283,7 +291,9 @@ strong { color: var(--ink); font-weight: 600; }
   display: inline-flex; align-items: center; gap: 0.5em; padding: 0.6em 1em; border: 1.5px solid var(--line-strong);
   border-radius: 100px; font-size: var(--t-sm); font-weight: 500; cursor: pointer; transition: all .2s var(--ease); user-select: none;
 }
-.choice input { position: absolute; opacity: 0; pointer-events: none; }
+/* visually hidden, but sized so the global .field input { width:100% } can't
+   stretch the radio and blow out horizontal scroll at phone width */
+.choice input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .choice:has(input:checked) { border-color: var(--ink); background: var(--ink); color: var(--paper); }
 .choice:hover { border-color: var(--ink); }
 
@@ -428,6 +438,8 @@ strong { color: var(--ink); font-weight: 600; }
 
 /* Steps */
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 3vw, 2.25rem); }
+/* four-step variant (tutors): 4 columns on desktop, collapses like .steps below 880 */
+.steps--four { grid-template-columns: repeat(4, 1fr); }
 .step {
   background: var(--surface);
   border: 1.5px solid var(--gold-deep);
