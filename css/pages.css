@@ -70,6 +70,19 @@
 .faq-more:hover .faq-more__arrow { transform: translateX(3px); }
 @media (prefers-reduced-motion: reduce) { .faq summary .ic, .faq summary .ic::after { transition: none; } }
 
+/* ---- Tap-press feedback (pages): FAQ rows, the FAQ "next page" control, the
+   chat send button, and admin tabs, so a thumb gets a response the way a cursor
+   gets :hover. Reduced-motion drops the movement (color feedback remains). ---- */
+.faq summary:active { background: var(--paper-2); }
+.faq-more:active { background: var(--surface); border-color: var(--ink); transform: translateY(0); }
+.chat__send:active { transform: scale(0.94); background: oklch(47% 0.13 70); }
+.admin-tab:active { background: var(--paper-2); }
+@media (prefers-reduced-motion: reduce) {
+  .faq-more, .faq-more__arrow, .chat__send, .admin-tab, .switch .track::before { transition: none !important; }
+  .chat__send:active { transform: none; }
+  .admin-panel.active { animation: none; }
+}
+
 /* ============================================================
    Members Portal
    ============================================================ */

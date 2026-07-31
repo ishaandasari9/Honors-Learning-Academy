@@ -148,7 +148,10 @@ strong { color: var(--ink); font-weight: 600; }
 .btn--ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
 .btn--lg { padding: 1.05em 1.9em; font-size: var(--t-base); min-height: 56px; }
 .btn--block { width: 100%; }
-.btn:active { transform: translateY(0); }
+/* tap-press feedback: sink + darken, fast, no bounce (reduced-motion drops the move) */
+.btn:active { transform: translateY(1px); }
+.btn--primary:active, .btn--gold:active { background: oklch(47% 0.13 70); box-shadow: 0 1px 2px oklch(54% 0.125 72 / 0.30); }
+.btn--ghost:active { background: var(--paper-2); border-color: var(--ink); }
 
 .link-gold {
   color: var(--gold-ink); font-weight: 600; background-image: linear-gradient(var(--gold), var(--gold));
@@ -277,8 +280,13 @@ strong { color: var(--ink); font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; filter: none; transition: none; }
-  .btn, .card, .nav__link, .link-gold, .link-blue { transition: none !important; }
+  .btn, .card, .nav__link, .link-gold, .link-blue,
+  .door, .subj, .step, .footer__social a, .subj__req, .trust-standards__link,
+  .nav__burger, .nav__burger span, .nav__burger span::before, .nav__burger span::after { transition: none !important; }
   .btn:hover svg { transform: none; }
+  .link-blue:hover svg { transform: none; }
+  /* tap-press feedback: keep the color/bg change, drop the movement */
+  .btn:active, .footer__social a:active { transform: none; }
 }
 
 /* ---- Forms ---- */
@@ -307,6 +315,15 @@ strong { color: var(--ink); font-weight: 600; }
 .choice input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .choice:has(input:checked) { border-color: var(--ink); background: var(--ink); color: var(--paper); }
 .choice:hover { border-color: var(--ink); }
+
+/* ---- Tap-press feedback on interactive rows, pills, and icon buttons, so a
+   thumb gets a response the way a cursor gets :hover. Fast, short, no bounce;
+   movement is dropped under prefers-reduced-motion (color feedback remains). ---- */
+.nav__link:active { background: var(--paper-2); }
+.nav__burger:active { background: var(--paper-2); }
+.choice:active { border-color: var(--ink); background: var(--paper-2); }
+.subj__summary:active { background: var(--paper-2); }
+.footer__social a:active { transform: scale(0.92); border-color: var(--gold-bright); }
 
 /* ---- Utilities ---- */
 .u-center { text-align: center; }
