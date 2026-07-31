@@ -168,6 +168,17 @@ strong { color: var(--ink); font-weight: 600; }
 .link-blue svg { width: 1em; height: 1em; transition: transform .25s var(--ease); }
 .link-blue:hover svg { transform: translateX(3px); }
 
+/* ---- Touch pointers can't hover, so the growing-underline links never reveal
+   their underline and .link-blue never reveals its blue. Show those states at
+   rest when the primary pointer can't hover; the desktop hover animation is
+   untouched. Static at rest, so no motion is introduced. ---- */
+@media (hover: none) {
+  .link-gold, .subj__req, .trust-standards__link { background-size: 100% 1.5px; }
+  .link-blue { color: var(--blue); background-size: 100% 2px; }
+  a.team__name { text-decoration: underline; text-decoration-color: var(--gold-line); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  .footer__grid li a { text-decoration: underline; text-decoration-color: oklch(52% 0.03 256); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+}
+
 /* contextual color shapes: a soft blurred blue + gold blob hugging the primary CTA clusters */
 .hero__btns, .cta-band .cluster { position: relative; }
 .hero__btns > *, .cta-band .cluster > * { position: relative; z-index: 1; }
