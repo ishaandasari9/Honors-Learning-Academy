@@ -232,9 +232,7 @@
             <div>
               <h4>Explore</h4>
               <ul style="list-style:none;display:grid;gap:.6rem">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="students.html">For families</a></li>
-                <li><a href="tutors.html">Become a tutor</a></li>
+                ${NAV.map(n => `<li><a href="${n.href}">${n.label}</a></li>`).join("")}
               </ul>
             </div>
             <div>
