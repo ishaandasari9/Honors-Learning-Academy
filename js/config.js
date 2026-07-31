@@ -65,7 +65,7 @@ window.HLA_TEAM = [
   { name: "Sohan Narala",     role: "Operations & Logistics",  bio: "", photo: "" },
   { name: "Shaurya Gautum",   role: "Operations & Logistics",  bio: "", photo: "" },
   { name: "Pranit Pradhan",   role: "Outreach & Social Media", bio: "", photo: "" },
-  { name: "Akhil Chavali",    role: "Curriculum",              bio: "", photo: "" },
+  { name: "Akhil Chavali",    role: "Curriculum Developer",    bio: "", photo: "" },
   { name: "Anish Premnath",   role: "Technology & Web",        bio: "", photo: "" }
 ];
 
