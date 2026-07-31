@@ -253,7 +253,9 @@ strong { color: var(--ink); font-weight: 600; }
 .footer__brand .brand { color: oklch(96% 0.012 84); }
 .footer__brand .brand small { color: oklch(70% 0.02 84); }
 .footer__social { display: flex; gap: 0.6rem; margin-top: 1.25rem; }
-.footer__social a { width: 40px; height: 40px; border: 1px solid oklch(40% 0.03 256); border-radius: 50%; display: grid; place-items: center; transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .2s var(--ease); }
+.footer__social a { width: 44px; height: 44px; border: 1px solid oklch(40% 0.03 256); border-radius: 50%; display: grid; place-items: center; transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .2s var(--ease); }
+/* footer nav/contact links: give the ~21px rows a real tap area on touch */
+.footer__grid li a { display: inline-block; padding-block: 0.5rem; }
 .footer__social a:hover { border-color: var(--gold-bright); background: oklch(30% 0.05 258); transform: translateY(-2px); }
 .footer__social svg { width: 18px; height: 18px; }
 .footer__bottom { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid oklch(34% 0.03 256); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; font-size: var(--t-sm); color: oklch(64% 0.02 84); }
@@ -307,7 +309,7 @@ strong { color: var(--ink); font-weight: 600; }
 .field.invalid .error { display: block; }
 .choice-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .choice {
-  display: inline-flex; align-items: center; gap: 0.5em; padding: 0.6em 1em; border: 1.5px solid var(--line-strong);
+  display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; padding: 0.6em 1em; border: 1.5px solid var(--line-strong);
   border-radius: 100px; font-size: var(--t-sm); font-weight: 500; cursor: pointer; transition: all .2s var(--ease); user-select: none;
 }
 /* visually hidden, but sized so the global .field input { width:100% } can't
@@ -452,6 +454,14 @@ strong { color: var(--ink); font-weight: 600; }
   background-image: linear-gradient(var(--gold), var(--gold)); background-size: 0% 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .28s var(--ease); }
 .subj__req:hover { background-size: 100% 1.5px; }
 .subj__req svg { width: 1em; height: 1em; }
+
+/* Guarantee a 44px-tall tap target on standalone text-link CTAs. Their underline
+   is a bottom-anchored background, so vertical padding would detach it; a
+   centered transparent overlay grows the hit area with no visual change. */
+.subj__req, .link-blue, button.link-gold[data-reset] { position: relative; }
+.subj__req::after, .link-blue::after, button.link-gold[data-reset]::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 44px;
+}
 
 .subj--spec .subj__ic { background: var(--ink); color: var(--gold-bright); }
 
@@ -805,4 +815,9 @@ a.team__name:hover { color: var(--gold-ink); }
 @media (max-width: 640px) {
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 1.75rem; }
   .footer__brand { grid-column: 1 / -1; }
+}
+/* single column on phones: the long contact email gets full width (no ugly
+   mid-word wrap) and the link list stops feeling cramped */
+@media (max-width: 430px) {
+  .footer__grid { grid-template-columns: 1fr; gap: 1.5rem; }
 }
